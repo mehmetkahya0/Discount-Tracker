@@ -12,7 +12,7 @@ def test_config():
     return {
         "products": [
             {
-                "url": "https://www.amazon.com.tr/test-product",
+                "url": "https://www.amazon.com.tr/STANLEY-Quick-Paslanmaz-Termos-Turuncu/dp/B0CNTW2G2F/?_encoding=UTF8&ref_=pd_hp_d_atf_ci_mcx_mr_ca_hp_atf_d",
                 "threshold": 1000.0,
                 "name": "Test Product"
             }
@@ -60,7 +60,7 @@ def test_track_product(mock_session, tracker, mock_response):
     mock_session.return_value.get.return_value = mock_response
     
     product = ProductConfig(
-        url="https://www.amazon.com.tr/test-product",
+        url="https://www.amazon.com.tr/STANLEY-Quick-Paslanmaz-Termos-Turuncu/dp/B0CNTW2G2F/?_encoding=UTF8&ref_=pd_hp_d_atf_ci_mcx_mr_ca_hp_atf_d",
         threshold=2000.0,
         name="Test Product"
     )
