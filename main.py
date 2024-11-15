@@ -10,9 +10,11 @@ import time
 from datetime import datetime
 from colorama import Fore, Style, init
 from urllib3 import Retry
+import ctypes
 
 # Initialize colorama for Windows
 init()
+
 
 @dataclass
 class ProductConfig:
@@ -22,9 +24,10 @@ class ProductConfig:
     last_price: Optional[float] = None
     last_check: Optional[datetime] = None
 
+
 class PriceTracker:
     VERSION = "1.0"
-    
+
     HEADERS = {
         'amazon': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -72,7 +75,7 @@ class PriceTracker:
     TIMEOUTS = {
         'amazon': (10, 30),
         'hepsiburada': (15, 45),
-        'trendyol': (15, 45)
+        'trendyol': (10, 30)
     }
 
     def __init__(self, config_path: str = "config.json"):
@@ -121,7 +124,8 @@ class PriceTracker:
                 price_element = soup.select_one(selector)
                 if price_element:
                     price_text = price_element.get_text().strip()
-                    price_text = price_text.replace('TL', '').replace('₺', '').replace(' ', '')
+                    price_text = price_text.replace(
+                        'TL', '').replace('₺', '').replace(' ', '')
                     price_text = price_text.replace('.', '').replace(',', '.')
                     try:
                         return float(price_text)
@@ -132,20 +136,45 @@ class PriceTracker:
             logging.error(f"Price extraction failed: {str(e)}")
             return None
 
+    # Update the send_notification method in main.py
+
     def send_notification(self, product: ProductConfig, price: float):
         try:
-            short_name = f"{product.name[:30]}..." if len(product.name) > 30 else product.name
+            short_name = f"{product.name[:30]}..." if len(
+                product.name) > 30 else product.name
             message = (
-                f"Fiyat: ₺{price:.2f}\n"
-                f"Eşik: ₺{product.threshold:.2f}\n"
-                f"URL: {product.url}"
+                f"Price: ₺{price:.2f}\n"
+                f"Threshold: ₺{product.threshold:.2f}"
             )
-            notification.notify(
-                title=f"Fiyat Düştü! - {short_name}",
-                message=message,
-                timeout=10
+
+            # Windows notification using ctypes
+            MessageBox = ctypes.windll.user32.MessageBoxW
+            MB_ICONINFORMATION = 0x60
+
+            # Show Windows message box (non-blocking)
+            ctypes.windll.user32.MessageBoxW(
+                0,
+                message,
+                f"PRICE DROP ALERT! - {short_name}",
+                MB_ICONINFORMATION
             )
+
+            # Console notification with colors and box
+            print(f"""
+    {Fore.GREEN}╔════════════════════════════════════════════╗
+    ║             PRICE DROP ALERT!              ║
+    ║                                           ║
+    ║  Product: {short_name}
+    ║  Price: ₺{price:.2f}
+    ║  Threshold: ₺{product.threshold:.2f}
+    ╚════════════════════════════════════════════╝{Style.RESET_ALL}
+            """)
+
+            # System beep
+            ctypes.windll.kernel32.Beep(1000, 500)
+
             logging.info(f"Notification sent for {short_name}")
+
         except Exception as e:
             logging.error(f"Notification failed: {str(e)}")
 
@@ -166,7 +195,7 @@ class PriceTracker:
             soup = BeautifulSoup(response.content, 'html.parser')
             title_selector = self.SELECTORS[site_type]['title']
             title = soup.select_one(title_selector)
-            
+
             if title:
                 product.name = title.get_text().strip()
 
@@ -186,7 +215,7 @@ class PriceTracker:
     def print_price_info(self, product: ProductConfig, current_price: float):
         now = datetime.now().strftime("%H:%M:%S")
         price_color = Fore.GREEN if current_price < product.threshold else Fore.RED
-        
+
         price_change = ""
         if product.last_price:
             diff = current_price - product.last_price
@@ -204,7 +233,7 @@ Threshold: ₺{product.threshold:.2f}
     def show_banner(self):
         products_count = len(self.config.get('products', []))
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        
+
         print(f"""
 {Fore.CYAN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃     ╭─────────────────────────────────╮     ┃
@@ -226,11 +255,13 @@ Threshold: ₺{product.threshold:.2f}
                     raise ValueError("Config must contain 'products' list")
                 return config
         except FileNotFoundError:
-            logging.warning(f"Config file {config_path} not found, using empty config")
+            logging.warning(
+                f"Config file {config_path} not found, using empty config")
             return {"products": []}
         except json.JSONDecodeError:
             logging.error(f"Invalid JSON in {config_path}, using empty config")
             return {"products": []}
+
 
 def main():
     tracker = PriceTracker()
@@ -239,22 +270,26 @@ def main():
     while True:
         try:
             check_count += 1
-            print(f"\n{Fore.CYAN}Check #{check_count} - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{Style.RESET_ALL}")
+            print(f"\n{Fore.CYAN}Check #{
+                  check_count} - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{Style.RESET_ALL}")
 
             for product in tracker.config.get('products', []):
                 prod_config = ProductConfig(**product)
                 tracker.track_product(prod_config)
                 time.sleep(1)
 
-            print(f"\n{Fore.YELLOW}Waiting 5 minutes before next check...{Style.RESET_ALL}")
+            print(f"\n{Fore.YELLOW}Waiting 5 minutes before next check...{
+                  Style.RESET_ALL}")
             time.sleep(300)
 
         except KeyboardInterrupt:
             print(f"\n{Fore.CYAN}Stopping price tracker...{Style.RESET_ALL}")
             break
         except Exception as e:
-            logging.error(f"{Fore.RED}Main loop error: {str(e)}{Style.RESET_ALL}")
+            logging.error(f"{Fore.RED}Main loop error: {
+                          str(e)}{Style.RESET_ALL}")
             time.sleep(60)
+
 
 if __name__ == "__main__":
     main()
