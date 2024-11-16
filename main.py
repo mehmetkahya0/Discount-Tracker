@@ -167,6 +167,7 @@ class PriceTracker:
     ║  Product: {short_name}
     ║  Price: ₺{price:.2f}
     ║  Threshold: ₺{product.threshold:.2f}
+    ║  URL: {product.url}                        ║
     ╚════════════════════════════════════════════╝{Style.RESET_ALL}
             """)
 
@@ -233,20 +234,23 @@ Threshold: ₺{product.threshold:.2f}
     def show_banner(self):
         products_count = len(self.config.get('products', []))
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        width = 56  # Fixed width for consistent display
 
-        print(f"""
-{Fore.CYAN}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃     ╭─────────────────────────────────╮     ┃
-┃     │      PRICE TRACKER v{self.VERSION}         │     ┃
-┃     │         by Mehmet Kahya         │     ┃
-┃     ╰─────────────────────────────────╯     ┃
-┃                                             ┃
-┃  🔍 Tracking: {products_count} product{'s' if products_count != 1 else ''}                    ┃
-┃  ⏰ Started: {current_time}           ┃
-┃  ⚡ Press [Ctrl+C] to exit                   ┃
-┃                                             ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛{Style.RESET_ALL}""")
+        ascii_art = f"""{Fore.CYAN}
+    ╭{'─' * width}╮
+    │{' ' * (width+0)}│
+    │{' '*4}█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█{' '*4}│
+    │{' '*4}█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄{' '*4}│
+    │{' ' * (width+0)}│
+    │{' '*2}• Active Products: {f"{products_count} item{'s' if products_count != 1 else ''}":<20}{' '*10}│
+    │{' '*2}• Start Time: {current_time:<32}{' '*2}│
+    │{' '*2}• Author: {Fore.GREEN}Mehmet Kahya{Fore.CYAN:<32}{' '*2}│
+    │{' '*2}• Version: {Fore.YELLOW}1.0{Fore.CYAN:<35}{' '*2}│
+    │{' ' * (width+0)}│
+    ╰{'─' * width}╯{Style.RESET_ALL}"""
 
+        print(ascii_art)
+    
     def load_config(self, config_path: str) -> Dict:
         try:
             with open(config_path, 'r', encoding='utf-8') as f:
