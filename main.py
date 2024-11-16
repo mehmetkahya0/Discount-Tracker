@@ -16,7 +16,6 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import webbrowser
 import csv
 import psutil
-from memory_profiler import memory_usage
 
 # For Windows High DPI scaling
 if hasattr(ctypes, 'windll'):
@@ -172,7 +171,7 @@ class PriceTracker:
             response = self.session.get(
                 product.url,
                 headers=self.HEADERS[site_type],
-                timeout=10  # Reduced timeout
+                timeout=10  # Adjusted timeout
             )
             response.raise_for_status()
 
@@ -224,12 +223,12 @@ class PriceTrackerGUI(tk.Tk):
         self.geometry("1000x700")
         self.tracker = PriceTracker()
         self.products_data = []  # Initialize products data list
+        self.monitoring = tk.BooleanVar(value=False)  # Variable to control monitoring
         self.main_frame = ttk.Frame(self)
         self.main_frame.pack(expand=True, fill='both', padx=10, pady=10)
         self.create_table()
         self.create_controls()
         self.create_resource_usage_label()
-        self.update_resource_usage()
         self.after(0, self.update_prices)  # Immediate update
 
         # Add ASCII logo to the window
@@ -240,26 +239,46 @@ class PriceTrackerGUI(tk.Tk):
             pady=(10, 20))
 
     def create_resource_usage_label(self):
-        self.resource_label = ttk.Label(self.main_frame, text="", font=("Helvetica", 10))
-        self.resource_label.pack(pady=(5, 5))
+        resource_frame = ttk.Frame(self.main_frame)
+        resource_frame.pack(pady=(5, 5), fill='x')
+
+        self.monitor_checkbox = ttk.Checkbutton(
+            resource_frame,
+            text="Enable Resource Monitoring",
+            variable=self.monitoring,
+            command=self.toggle_resource_monitoring
+        )
+        self.monitor_checkbox.pack(side='left')
+
+        self.resource_label = ttk.Label(resource_frame, text="", font=("Helvetica", 10))
+        self.resource_label.pack(side='left', padx=(10, 0))
+
+    def toggle_resource_monitoring(self):
+        if self.monitoring.get():
+            self.update_resource_usage()
+        else:
+            self.resource_label.config(text="")
 
     def update_resource_usage(self):
-        # Get current process
-        process = psutil.Process()
+        if self.monitoring.get():
+            # Get current process
+            process = psutil.Process()
 
-        # Get RAM usage in MB
-        ram_usage = process.memory_info().rss / (1024 * 1024)
+            # Get RAM usage in MB
+            ram_usage = process.memory_info().rss / (1024 * 1024)
 
-        # Get CPU usage percentage
-        cpu_usage = process.cpu_percent(interval=1)
+            # Get CPU usage percentage
+            cpu_usage = process.cpu_percent(interval=0)
 
-        # Update the label text
-        self.resource_label.config(
-            text=f"CPU Usage: {cpu_usage:.1f}%   RAM Usage: {ram_usage:.1f} MB"
-        )
+            # Update the label text
+            self.resource_label.config(
+                text=f"CPU Usage: {cpu_usage:.1f}%   RAM Usage: {ram_usage:.1f} MB"
+            )
 
-        # Schedule to update every second
-        self.after(1000, self.update_resource_usage)
+            # Schedule to update every second
+            self.after(1000, self.update_resource_usage)
+        else:
+            self.resource_label.config(text="")
 
     def create_table(self):
         columns = ('Product', 'Current Price',
@@ -640,11 +659,6 @@ class HistoryDialog(tk.Toplevel):
         canvas.draw()
 
 def main():
-    # Use memory_profiler to monitor main function's memory usage
-    mem_usage = memory_usage((run_app, ), interval=1, timeout=None)
-    print(f"Maximum memory usage: {max(mem_usage):.2f} MB")
-
-def run_app():
     app = PriceTrackerGUI()
     app.mainloop()
 
