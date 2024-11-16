@@ -140,11 +140,13 @@ class PriceTracker:
 
     def send_notification(self, product: ProductConfig, price: float):
         try:
-            short_name = f"{product.name[:30]}..." if len(
-                product.name) > 30 else product.name
+            short_name = f"{product.name[:30]}..." if len(product.name) > 30 else product.name
             message = (
-                f"Price: ₺{price:.2f}\n"
-                f"Threshold: ₺{product.threshold:.2f}"
+                f"💰 Current Price: ₺{price:.2f}\n"
+                f"🎯 Target Price: ₺{product.threshold:.2f}\n"
+                f"📊 Savings: ₺{product.threshold - price:.2f}\n"
+                f"🔗 URL: {product.url}\n\n"
+                f"⚡ Price dropped for {short_name}! 🔔"
             )
 
             # Windows notification using ctypes
@@ -239,13 +241,13 @@ Threshold: ₺{product.threshold:.2f}
         ascii_art = f"""{Fore.CYAN}
     ╭{'─' * width}╮
     │{' ' * (width+0)}│
-    │{' '*4}█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█{' '*4}│
-    │{' '*4}█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄{' '*4}│
+    │{' '*4}█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█{' '*5}│
+    │{' '*4}█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄{' '*5}│
     │{' ' * (width+0)}│
-    │{' '*2}• Active Products: {f"{products_count} item{'s' if products_count != 1 else ''}":<20}{' '*10}│
-    │{' '*2}• Start Time: {current_time:<32}{' '*2}│
-    │{' '*2}• Author: {Fore.GREEN}Mehmet Kahya{Fore.CYAN:<32}{' '*2}│
-    │{' '*2}• Version: {Fore.YELLOW}1.0{Fore.CYAN:<35}{' '*2}│
+    │{' '*2}• Active Products: {f"{products_count} item{'s' if products_count != 1 else ''}":<20}{' '*15}│
+    │{' '*2}• Start Time: {current_time:<32}{' '*8}│
+    │{' '*2}• Author: {Fore.GREEN}Mehmet Kahya{Fore.CYAN:<32}{' '*5}│
+    │{' '*2}• Version: {Fore.YELLOW}1.0{Fore.CYAN:<35}{' '*10}│
     │{' ' * (width+0)}│
     ╰{'─' * width}╯{Style.RESET_ALL}"""
 
