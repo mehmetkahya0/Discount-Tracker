@@ -1,19 +1,24 @@
+# main.py
+import tkinter as tk
+from tkinter import ttk, messagebox
 import requests
 from bs4 import BeautifulSoup
 import logging
 from dataclasses import dataclass
 from typing import Optional, Dict, List
 import json
-from plyer import notification
-from tenacity import retry, stop_after_attempt, wait_exponential
 import time
 from datetime import datetime
 from colorama import Fore, Style, init
 from urllib3 import Retry
 import ctypes
 import argparse
+import sqlite3
+from pathlib import Path
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-# Initialize colorama for Windows
+# Initialize colorama
 init()
 
 
@@ -36,54 +41,36 @@ class PriceTracker:
         },
         'hepsiburada': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
         },
         'trendyol': {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
         }
     }
 
     SELECTORS = {
         'amazon': {
-            'price': [
-                'span.a-price-whole',
-                'span.a-offscreen',
-                '#priceblock_ourprice',
-                '.a-price .a-offscreen'
-            ],
+            'price': ['span.a-price-whole', 'span.a-offscreen'],
             'title': '#productTitle'
         },
         'hepsiburada': {
-            'price': [
-                'span[data-test-id="price-current-price"]',
-                '[data-test-id="product-price"]'
-            ],
+            'price': ['span[data-test-id="price-current-price"]'],
             'title': 'h1[data-test-id="product-name"]'
         },
         'trendyol': {
-            'price': [
-                'span.prc-dsc',
-                'span.product-price',
-                'div.pr-bx-w span'
-            ],
+            'price': ['span.prc-dsc', 'span.product-price'],
             'title': 'h1.pr-new-br'
         }
-    }
-
-    TIMEOUTS = {
-        'amazon': (10, 30),
-        'hepsiburada': (15, 45),
-        'trendyol': (10, 30)
     }
 
     def __init__(self, config_path: str = "config.json"):
         self.setup_logging()
         self.config = self.load_config(config_path)
+        self.setup_database()
         self.session = self.setup_session()
-        self.show_banner()
 
     def setup_logging(self):
         logging.basicConfig(
@@ -103,158 +90,20 @@ class PriceTracker:
             status_forcelist=[500, 502, 503, 504],
             allowed_methods=["GET"]
         )
-        adapter = requests.adapters.HTTPAdapter(
-            max_retries=retry_strategy,
-            pool_connections=10,
-            pool_maxsize=10
-        )
+        adapter = requests.adapters.HTTPAdapter(max_retries=retry_strategy)
         session.mount('http://', adapter)
         session.mount('https://', adapter)
         return session
 
-    def get_site_type(self, url: str) -> str:
-        for site in ['amazon', 'hepsiburada', 'trendyol']:
-            if site in url:
-                return site
-        return 'amazon'  # default fallback
-
-    @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
-    def extract_price(self, soup: BeautifulSoup, site_type: str) -> Optional[float]:
-        try:
-            for selector in self.SELECTORS[site_type]['price']:
-                price_element = soup.select_one(selector)
-                if price_element:
-                    price_text = price_element.get_text().strip()
-                    price_text = price_text.replace(
-                        'TL', '').replace('₺', '').replace(' ', '')
-                    price_text = price_text.replace('.', '').replace(',', '.')
-                    try:
-                        return float(price_text)
-                    except ValueError:
-                        continue
-            return None
-        except Exception as e:
-            logging.error(f"Price extraction failed: {str(e)}")
-            return None
-
-    # Update the send_notification method in main.py
-
-    def send_notification(self, product: ProductConfig, price: float):
-        try:
-            short_name = f"{product.name[:30]}..." if len(
-                product.name) > 30 else product.name
-            message = (
-                f"💰 Current Price: ₺{price:.2f}\n"
-                f"🎯 Target Price: ₺{product.threshold:.2f}\n"
-                f"📊 Savings: ₺{product.threshold - price:.2f}\n"
-                f"🔗 URL: {product.url}\n\n"
-                f"⚡ Price dropped for {short_name}! 🔔"
-            )
-
-            # Windows notification using ctypes
-            MessageBox = ctypes.windll.user32.MessageBoxW
-            MB_ICONINFORMATION = 0x60
-
-            # Show Windows message box (non-blocking)
-            ctypes.windll.user32.MessageBoxW(
-                0,
-                message,
-                f"PRICE DROP ALERT! - {short_name}",
-                MB_ICONINFORMATION
-            )
-
-            # Console notification with colors and box
-            print(f"""
-    {Fore.GREEN}╔════════════════════════════════════════════╗
-    ║             PRICE DROP ALERT!              ║
-    ║                                           ║
-    ║  Product: {short_name}
-    ║  Price: ₺{price:.2f}
-    ║  Threshold: ₺{product.threshold:.2f}
-    ║  URL: {product.url}                        ║
-    ╚════════════════════════════════════════════╝{Style.RESET_ALL}
+    def setup_database(self):
+        with sqlite3.connect('price_history.db') as conn:
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS price_history (
+                    url TEXT,
+                    price REAL,
+                    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+                )
             """)
-
-            # System beep
-            ctypes.windll.kernel32.Beep(1000, 500)
-
-            logging.info(f"Notification sent for {short_name}")
-
-        except Exception as e:
-            logging.error(f"Notification failed: {str(e)}")
-
-    def track_product(self, product: ProductConfig) -> Optional[float]:
-        site_type = self.get_site_type(product.url)
-        timeout = self.TIMEOUTS[site_type]
-
-        try:
-            response = self.session.get(
-                product.url,
-                headers=self.HEADERS[site_type],
-                timeout=timeout,
-                verify=True,
-                allow_redirects=True
-            )
-            response.raise_for_status()
-
-            soup = BeautifulSoup(response.content, 'html.parser')
-            title_selector = self.SELECTORS[site_type]['title']
-            title = soup.select_one(title_selector)
-
-            if title:
-                product.name = title.get_text().strip()
-
-            price = self.extract_price(soup, site_type)
-            if price:
-                product.last_check = datetime.now()
-                self.print_price_info(product, price)
-                if price < product.threshold:
-                    self.send_notification(product, price)
-                product.last_price = price
-                return price
-
-        except Exception as e:
-            logging.error(f"Error tracking {product.url}: {str(e)}")
-        return None
-
-    def print_price_info(self, product: ProductConfig, current_price: float):
-        now = datetime.now().strftime("%H:%M:%S")
-        price_color = Fore.GREEN if current_price < product.threshold else Fore.RED
-
-        price_change = ""
-        if product.last_price:
-            diff = current_price - product.last_price
-            if diff > 0:
-                price_change = f"{Fore.RED}(↑ +{diff:.2f}){Style.RESET_ALL}"
-            elif diff < 0:
-                price_change = f"{Fore.GREEN}(↓ {diff:.2f}){Style.RESET_ALL}"
-
-        print(f"""
-{Fore.YELLOW}[{now}] Checking: {product.name[:50]}...{Style.RESET_ALL}
-Current Price: {price_color}₺{current_price:.2f}{Style.RESET_ALL} {price_change}
-Threshold: ₺{product.threshold:.2f}
-{'='*50}""")
-
-    def show_banner(self):
-        products_count = len(self.config.get('products', []))
-        current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        width = 56  # Fixed width for consistent display
-
-        ascii_art = f"""{Fore.CYAN}
-    ╭{'─' * width}╮
-    │{' ' * (width+0)}│
-    │{' '*4}█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█{' '*5}│
-    │{' '*4}█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄{' '*5}│
-    │{' ' * (width+0)}│
-    │{' '*2}• Active Products: {f"{products_count} item{'s' if products_count != 1 else ''}":<20}{' '*15}│
-    │{' '*2}• Start Time: {current_time:<32}{' '*8}│
-    │{' '*2}• Author: {Fore.GREEN}Mehmet Kahya{Fore.CYAN:<32}{' '*5}│
-    │{' '*2}• Github: {Fore.GREEN}@mehmetkahya0{Fore.CYAN:<32}{' '*4}│
-    │{' '*2}• Version: {Fore.YELLOW}1.0{Fore.CYAN:<35}{' '*10}│
-    │{' ' * (width+0)}│
-    ╰{'─' * width}╯{Style.RESET_ALL}"""
-
-        print(ascii_art)
 
     def load_config(self, config_path: str) -> Dict:
         try:
@@ -264,90 +113,328 @@ Threshold: ₺{product.threshold:.2f}
                     raise ValueError("Config must contain 'products' list")
                 return config
         except FileNotFoundError:
-            logging.warning(
-                f"Config file {config_path} not found, using empty config")
-            return {"products": []}
-        except json.JSONDecodeError:
-            logging.error(f"Invalid JSON in {config_path}, using empty config")
             return {"products": []}
 
-    def parse_args():
-        parser = argparse.ArgumentParser(
-            description='Price Tracker for Turkish e-commerce sites',
-            formatter_class=argparse.RawDescriptionHelpFormatter
-        )
+    def get_site_type(self, url: str) -> str:
+        if 'amazon' in url:
+            return 'amazon'
+        elif 'hepsiburada' in url:
+            return 'hepsiburada'
+        elif 'trendyol' in url:
+            return 'trendyol'
+        return 'amazon'
 
-        parser.add_argument(
-            '-c', '--config',
-            default='config.json',
-            help='Path to config file (default: config.json)'
-        )
+    def extract_price(self, soup: BeautifulSoup, site_type: str) -> Optional[float]:
+        try:
+            for selector in self.SELECTORS[site_type]['price']:
+                price_element = soup.select_one(selector)
+                if price_element:
+                    price_text = price_element.get_text().strip()
+                    price_text = price_text.replace(
+                        'TL', '').replace('₺', '').replace(' ', '')
+                    price_text = price_text.replace('.', '').replace(',', '.')
+                    return float(price_text)
+            return None
+        except Exception as e:
+            logging.error(f"Price extraction failed: {str(e)}")
+            return None
 
-        parser.add_argument(
-            '-i', '--interval',
-            type=int,
-            default=300,
-            help='Check interval in seconds (default: 300)'
-        )
+    def save_price(self, url: str, price: float):
+        with sqlite3.connect('price_history.db') as conn:
+            conn.execute(
+                "INSERT INTO price_history (url, price) VALUES (?, ?)",
+                (url, price)
+            )
 
-        parser.add_argument(
-            '--show-urls',
-            action='store_true',
-            help='Show tracked URLs and exit'
-        )
+    def get_price_history(self, url: str) -> List[tuple]:
+        with sqlite3.connect('price_history.db') as conn:
+            cursor = conn.execute(
+                "SELECT timestamp, price FROM price_history WHERE url = ? ORDER BY timestamp",
+                (url,)
+            )
+            return cursor.fetchall()
 
-        parser.add_argument(
-            '--log-level',
-            choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
-            default='INFO',
-            help='Set logging level (default: INFO)'
-        )
+    def plot_price_history(self, url: str, ax):
+        history = self.get_price_history(url)
+        if not history:
+            return
 
-        parser.add_argument(
-            '-v', '--version',
-            action='version',
-            version=f'Price Tracker {PriceTracker.VERSION}'
-        )
+        dates = [datetime.strptime(h[0], '%Y-%m-%d %H:%M:%S') for h in history]
+        prices = [h[1] for h in history]
 
-        return parser.parse_args()
+        ax.plot(dates, prices)
+        ax.set_title('Price History')
+        ax.set_xlabel('Date')
+        ax.set_ylabel('Price (TRY)')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+
+    def send_notification(self, product: ProductConfig, price: float):
+        try:
+            short_name = f"{product.name[:30]}..." if len(
+                product.name) > 30 else product.name
+            message = f"""
+💰 Current Price: ₺{price:.2f}
+🎯 Target Price: ₺{product.threshold:.2f}
+📊 Savings: ₺{product.threshold - price:.2f}
+
+{product.url}
+"""
+            MessageBox = ctypes.windll.user32.MessageBoxW
+            MB_ICONINFORMATION = 0x40
+
+            ctypes.windll.user32.MessageBoxW(
+                0, message, f"Price Drop! - {short_name}", MB_ICONINFORMATION)
+            ctypes.windll.kernel32.Beep(1000, 500)  # Beep sound
+
+            logging.info(f"Notification sent for {short_name}")
+        except Exception as e:
+            logging.error(f"Notification failed: {str(e)}")
+
+    def track_product(self, product: ProductConfig) -> Optional[float]:
+        site_type = self.get_site_type(product.url)
+        try:
+            response = self.session.get(
+                product.url,
+                headers=self.HEADERS[site_type],
+                timeout=30
+            )
+            response.raise_for_status()
+
+            soup = BeautifulSoup(response.content, 'html.parser')
+
+            title = soup.select_one(self.SELECTORS[site_type]['title'])
+            if title:
+                product.name = title.get_text().strip()
+
+            price = self.extract_price(soup, site_type)
+            if price:
+                self.save_price(product.url, price)
+                if price < product.threshold:
+                    self.send_notification(product, price)
+                return price
+
+        except Exception as e:
+            logging.error(f"Error tracking {product.url}: {str(e)}")
+        return None
+
+
+class PriceTrackerGUI(tk.Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.title("Price Tracker v1.0")
+        self.geometry("800x600")
+
+        self.tracker = PriceTracker()
+
+        self.main_frame = ttk.Frame(self)
+        self.main_frame.pack(expand=True, fill='both', padx=10, pady=10)
+
+        self.create_table()
+        self.create_controls()
+        self.after(1000, self.update_prices)
+
+    def create_table(self):
+        columns = ('Product', 'Current Price', 'Target', 'Site', 'Status')
+        self.tree = ttk.Treeview(
+            self.main_frame, columns=columns, show='headings')
+
+        for col in columns:
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=150)
+
+        self.tree.pack(expand=True, fill='both')
+
+        scrollbar = ttk.Scrollbar(
+            self.main_frame, orient='vertical', command=self.tree.yview)
+        scrollbar.pack(side='right', fill='y')
+        self.tree.configure(yscrollcommand=scrollbar.set)
+
+    def create_controls(self):
+        control_frame = ttk.Frame(self.main_frame)
+        control_frame.pack(fill='x', pady=10)
+
+        ttk.Button(control_frame, text="Add Product",
+                   command=self.add_product).pack(side='left', padx=5)
+        ttk.Button(control_frame, text="Remove Product",
+                   command=self.remove_product).pack(side='left', padx=5)
+        ttk.Button(control_frame, text="Show History",
+                   command=self.show_history).pack(side='left', padx=5)
+        ttk.Button(control_frame, text="Quit", command=self.quit).pack(
+            side='right', padx=5)
+        
+
+    def update_prices(self):
+        self.tree.delete(*self.tree.get_children())
+
+        for product in self.tracker.config.get('products', []):
+            prod_config = ProductConfig(**product)
+            price = self.tracker.track_product(prod_config)
+
+            if price:
+                status = "✅" if price < prod_config.threshold else "❌"
+                self.tree.insert('', 'end', values=(
+                    prod_config.name,
+                    f"₺{price:.2f}",
+                    f"₺{prod_config.threshold:.2f}",
+                    self.tracker.get_site_type(prod_config.url),
+                    status,
+                    prod_config.url  # Include URL as hidden value
+                ))
+        # 1 minutes (before 300000 => 5 minutes)
+        self.after(300000, self.update_prices)
+
+    def add_product(self):
+        dialog = AddProductDialog(self)
+        self.wait_window(dialog)
+
+    def remove_product(self):
+        selected = self.tree.selection()
+        if selected:
+            self.tree.delete(selected)
+
+    def show_history(self):
+        selected = self.tree.selection()
+        if selected:
+            item = self.tree.item(selected[0])
+            url = item['values'][5]  # Index 5 corresponds to the URL
+            HistoryDialog(self, url, self.tracker)
+            
+    def quit(self):
+        return super().quit()
+
+    def create_table(self):
+        columns = ('Product', 'Current Price',
+                   'Target', 'Site', 'Status', 'URL')
+        self.tree = ttk.Treeview(
+            self.main_frame, columns=columns, show='headings')
+
+        # Only show the first five columns
+        self.tree['displaycolumns'] = (
+            'Product', 'Current Price', 'Target', 'Site', 'Status')
+
+        for col in ('Product', 'Current Price', 'Target', 'Site', 'Status'):
+            self.tree.heading(col, text=col)
+            self.tree.column(col, width=150)
+
+        self.tree.pack(expand=True, fill='both')
+
+        scrollbar = ttk.Scrollbar(
+            self.main_frame, orient='vertical', command=self.tree.yview)
+        scrollbar.pack(side='right', fill='y')
+        self.tree.configure(yscrollcommand=scrollbar.set)
+
+
+class AddProductDialog(tk.Toplevel):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.title("Add Product")
+
+        ttk.Label(self, text="URL:").grid(row=0, column=0, padx=5, pady=5)
+        self.url = ttk.Entry(self, width=50)
+        self.url.grid(row=0, column=1, padx=5, pady=5)
+
+        ttk.Label(self, text="Threshold:").grid(
+            row=1, column=0, padx=5, pady=5)
+        self.threshold = ttk.Entry(self)
+        self.threshold.grid(row=1, column=1, padx=5, pady=5)
+
+        ttk.Button(self, text="Add", command=self.add).grid(
+            row=2, column=0, columnspan=2, pady=10)
+
+    def add(self):
+        try:
+            url = self.url.get()
+            threshold = float(self.threshold.get())
+
+            with open('config.json', 'r+', encoding='utf-8') as f:
+                config = json.load(f)
+                config['products'].append({
+                    'url': url,
+                    'threshold': threshold
+                })
+                f.seek(0)
+                json.dump(config, f, indent=4)
+                f.truncate()
+
+            self.destroy()
+        except ValueError:
+            messagebox.showerror("Error", "Invalid threshold value")
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+
+
+class HistoryDialog(tk.Toplevel):
+    def __init__(self, parent, url, tracker):
+        super().__init__(parent)
+        self.title("Price History")
+        self.geometry("800x600")
+
+        # Create figure with larger size
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Get price history data
+        history = tracker.get_price_history(url)
+        if history:
+            dates = [datetime.strptime(h[0], '%Y-%m-%d %H:%M:%S')
+                     for h in history]
+            prices = [h[1] for h in history]
+
+            # Plot with markers and line
+            ax.plot(dates, prices, 'bo-', markersize=6,
+                    linewidth=2, label='Price')
+
+            # Add grid
+            ax.grid(True, linestyle='--', alpha=0.7)
+
+            # Format y-axis as currency
+            ax.yaxis.set_major_formatter(
+                plt.FuncFormatter(lambda x, p: f'₺{x:,.2f}'))
+
+            # Rotate x-axis dates
+            plt.xticks(rotation=45, ha='right')
+
+            # Add labels and title
+            ax.set_title('Price History', pad=20,
+                         fontsize=12, fontweight='bold')
+            ax.set_xlabel('Date', labelpad=10)
+            ax.set_ylabel('Price (TRY)', labelpad=10)
+
+            # Add legend
+            ax.legend()
+
+            # Show min/max prices
+            min_price = min(prices)
+            max_price = max(prices)
+            ax.axhline(y=min_price, color='g', linestyle='--', alpha=0.5)
+            ax.axhline(y=max_price, color='r', linestyle='--', alpha=0.5)
+
+            # Add price annotations
+            for i, (date, price) in enumerate(zip(dates, prices)):
+                ax.annotate(f'₺{price:,.2f}',
+                            (date, price),
+                            xytext=(5, 5),
+                            textcoords='offset points',
+                            fontsize=8)
+        else:
+            ax.text(0.5, 0.5, 'No price history available',
+                    horizontalalignment='center',
+                    verticalalignment='center',
+                    transform=ax.transAxes)
+
+        # Adjust layout
+        plt.tight_layout()
+
+        # Create canvas
+        canvas = FigureCanvasTkAgg(fig, master=self)
+        canvas.draw()
+        canvas.get_tk_widget().pack(expand=True, fill='both', padx=10, pady=10)
 
 
 def main():
-    args = PriceTracker.parse_args()
-
-    if args.show_urls:
-        with open(args.config, 'r', encoding='utf-8') as f:
-            config = json.load(f)
-            print(f"\n{Fore.CYAN}Tracked URLs:{Style.RESET_ALL}")
-            for product in config.get('products', []):
-                print(f"• {product['name']}: {product['url']}")
-        return
-
-    tracker = PriceTracker(args.config)
-    check_count = 0
-
-    while True:
-        try:
-            check_count += 1
-            print(f"\n{Fore.CYAN}Check #{
-                  check_count} - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}{Style.RESET_ALL}")
-
-            for product in tracker.config.get('products', []):
-                prod_config = ProductConfig(**product)
-                tracker.track_product(prod_config)
-                time.sleep(1)
-
-            print(f"\n{Fore.YELLOW}Waiting 5 minutes before next check...{
-                  Style.RESET_ALL}")
-            time.sleep(300)
-
-        except KeyboardInterrupt:
-            print(f"\n{Fore.CYAN}Stopping price tracker...{Style.RESET_ALL}")
-            break
-        except Exception as e:
-            logging.error(f"{Fore.RED}Main loop error: {
-                          str(e)}{Style.RESET_ALL}")
-            time.sleep(60)
+    app = PriceTrackerGUI()
+    app.mainloop()
 
 
 if __name__ == "__main__":
