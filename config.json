@@ -13,14 +13,6 @@
         {
             "url": "https://www.amazon.com.tr/Apple-10-9-in%C3%A7-iPad-Wi-Fi/dp/B0DK3WZB8D?ref_=pd_hp_d_btf_unk_B0DK3WZB8D",
             "threshold": 13000.0
-        },
-        {
-            "url": "https://www.temu.com/tr/1--2200w-d%C4%B1%C5%9F--g%C3%BCne%C5%9F-enerjili-sokak-lambas%C4%B1-uzaktan-kumandal%C4%B1-led--lambas%C4%B1--lambas%C4%B1-i%CC%87nsan-v%C3%BCcudu-alg%C4%B1lama--lambas%C4%B1-g-601099560266546.html?_oak_mp_inf=ELLWjq6m1ogBGiBhYjcxNTlhNGMzNWM0NTAyYThlNzVlMWZjOGM4YWViNSCVu6i6szI%3D&top_gallery_url=https%3A%2F%2Fimg.kwcdn.com%2Fproduct%2Ffancy%2F524e2427-b7f6-4923-ada0-3e2446f82aeb.jpg&spec_gallery_id=4130837270&refer_page_sn=10005&refer_source=0&freesia_scene=1&_oak_freesia_scene=1&_oak_rec_ext_1=MTY2ODk&_oak_gallery_order=2109831638%2C761410309%2C1891898383%2C997721782%2C1549026829&refer_page_el_sn=200024&refer_page_name=home&refer_page_id=10005_1731799423865_ia8vyryh7z&_x_sessn_id=55mlbfsy77",
-            "threshold": 15.0
-        },
-        {
-            "url": "https://www.amazon.com.tr/Samsung-Galaxy-Depolama-T%C3%BCrkiye-Garantili/dp/B0CJWSKGS4/?_encoding=UTF8&ref_=pd_hp_d_btf_ci_mcx_mr_ca_id_hp_d",
-            "threshold": 9600.0
         }
     ]
 }
