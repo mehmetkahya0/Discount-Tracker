@@ -11,6 +11,7 @@ from datetime import datetime
 from colorama import Fore, Style, init
 from urllib3 import Retry
 import ctypes
+import argparse
 
 # Initialize colorama for Windows
 init()
@@ -140,7 +141,8 @@ class PriceTracker:
 
     def send_notification(self, product: ProductConfig, price: float):
         try:
-            short_name = f"{product.name[:30]}..." if len(product.name) > 30 else product.name
+            short_name = f"{product.name[:30]}..." if len(
+                product.name) > 30 else product.name
             message = (
                 f"💰 Current Price: ₺{price:.2f}\n"
                 f"🎯 Target Price: ₺{product.threshold:.2f}\n"
@@ -247,12 +249,13 @@ Threshold: ₺{product.threshold:.2f}
     │{' '*2}• Active Products: {f"{products_count} item{'s' if products_count != 1 else ''}":<20}{' '*15}│
     │{' '*2}• Start Time: {current_time:<32}{' '*8}│
     │{' '*2}• Author: {Fore.GREEN}Mehmet Kahya{Fore.CYAN:<32}{' '*5}│
+    │{' '*2}• Github: {Fore.GREEN}@mehmetkahya0{Fore.CYAN:<32}{' '*4}│
     │{' '*2}• Version: {Fore.YELLOW}1.0{Fore.CYAN:<35}{' '*10}│
     │{' ' * (width+0)}│
     ╰{'─' * width}╯{Style.RESET_ALL}"""
 
         print(ascii_art)
-    
+
     def load_config(self, config_path: str) -> Dict:
         try:
             with open(config_path, 'r', encoding='utf-8') as f:
@@ -268,9 +271,59 @@ Threshold: ₺{product.threshold:.2f}
             logging.error(f"Invalid JSON in {config_path}, using empty config")
             return {"products": []}
 
+    def parse_args():
+        parser = argparse.ArgumentParser(
+            description='Price Tracker for Turkish e-commerce sites',
+            formatter_class=argparse.RawDescriptionHelpFormatter
+        )
+
+        parser.add_argument(
+            '-c', '--config',
+            default='config.json',
+            help='Path to config file (default: config.json)'
+        )
+
+        parser.add_argument(
+            '-i', '--interval',
+            type=int,
+            default=300,
+            help='Check interval in seconds (default: 300)'
+        )
+
+        parser.add_argument(
+            '--show-urls',
+            action='store_true',
+            help='Show tracked URLs and exit'
+        )
+
+        parser.add_argument(
+            '--log-level',
+            choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
+            default='INFO',
+            help='Set logging level (default: INFO)'
+        )
+
+        parser.add_argument(
+            '-v', '--version',
+            action='version',
+            version=f'Price Tracker {PriceTracker.VERSION}'
+        )
+
+        return parser.parse_args()
+
 
 def main():
-    tracker = PriceTracker()
+    args = PriceTracker.parse_args()
+
+    if args.show_urls:
+        with open(args.config, 'r', encoding='utf-8') as f:
+            config = json.load(f)
+            print(f"\n{Fore.CYAN}Tracked URLs:{Style.RESET_ALL}")
+            for product in config.get('products', []):
+                print(f"• {product['name']}: {product['url']}")
+        return
+
+    tracker = PriceTracker(args.config)
     check_count = 0
 
     while True:
