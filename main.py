@@ -188,13 +188,13 @@ class PriceTracker:
             ctypes.windll.kernel32.Beep(1000, 500)  # Beep sound
 
             logging.info(f"Notification sent for {short_name}")
-            print(f"{Fore.GREEN}Notification sent for {short_name}{Style.RESET_ALL}")
+            print(f"{Fore.GREEN}Notification sent for {
+                  short_name}{Style.RESET_ALL}")
         except Exception as e:
             logging.error(f"Notification failed: {str(e)}")
-            
+
             print(f"{Fore.RED}Notification failed: {str(e)}{Style.RESET_ALL}")
-        
-            
+
     def track_product(self, product: ProductConfig) -> Optional[float]:
         site_type = self.get_site_type(product.url)
         try:
@@ -265,9 +265,12 @@ class PriceTrackerGUI(tk.Tk):
                    command=self.remove_product).pack(side='left', padx=5)
         ttk.Button(control_frame, text="Show History",
                    command=self.show_history).pack(side='left', padx=5)
+
+        ttk.Button(control_frame, text="Info", command=self.info).pack(
+            side='right', padx=5)
+
         ttk.Button(control_frame, text="Quit", command=self.quit).pack(
             side='right', padx=5)
-        
 
     def update_prices(self):
         self.tree.delete(*self.tree.get_children())
@@ -299,7 +302,6 @@ class PriceTrackerGUI(tk.Tk):
         if selected:
             print("Removing product")
             self.tree.delete(selected)
-            
 
     def show_history(self):
         selected = self.tree.selection()
@@ -307,7 +309,89 @@ class PriceTrackerGUI(tk.Tk):
             item = self.tree.item(selected[0])
             url = item['values'][5]  # Index 5 corresponds to the URL
             HistoryDialog(self, url, self.tracker)
-            
+
+
+    def info(self):
+        about = tk.Toplevel(self)
+        about.title("About Price Tracker")
+        about.geometry("600x400")
+        about.resizable(False, False)
+        
+        # Center window
+        about.transient(self)
+        about.grab_set()
+        
+        # Style
+        style = ttk.Style()
+        style.configure("Title.TLabel", font=("Helvetica", 12, "bold"))
+        style.configure("Info.TLabel", font=("Helvetica", 10))
+        
+        # Main frame with padding
+        main_frame = ttk.Frame(about, padding="20")
+        main_frame.pack(fill='both', expand=True)
+        
+        # ASCII Logo
+        logo_text = """
+        █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
+        █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
+        
+        logo = ttk.Label(main_frame, text=logo_text, font=("Courier", 12, "bold"))
+        logo.pack(pady=(0, 20))
+        
+        # Version info
+        ttk.Label(
+            main_frame, 
+            text=f"Version {self.tracker.VERSION}", 
+            style="Title.TLabel"
+        ).pack(pady=(0, 10))
+        
+        # Supported sites
+        ttk.Label(
+            main_frame,
+            text="Supported Sites:",
+            style="Title.TLabel"
+        ).pack(pady=(10, 5))
+        
+        sites_frame = ttk.Frame(main_frame)
+        sites_frame.pack(pady=(0, 20))
+        
+        for site in ["Amazon.com.tr", "Trendyol", "Hepsiburada"]:
+            ttk.Label(
+                sites_frame,
+                text=f"• {site}",
+                style="Info.TLabel"
+            ).pack()
+        
+        # Developer info
+        ttk.Label(
+            main_frame,
+            text="Developed by Mehmet Kahya",
+            style="Info.TLabel"
+        ).pack(pady=(10, 5))
+        
+        # GitHub link
+        github_link = ttk.Label(
+            main_frame,
+            text="github.com/mehmetkahya0",
+            style="Info.TLabel",
+            cursor="hand2",
+            foreground="blue"
+        )
+        github_link.pack()
+        github_link.bind("<Button-1>", lambda e: self.open_github())
+        
+        # Close button
+        ttk.Button(
+            main_frame,
+            text="Close",
+            command=about.destroy
+        ).pack(pady=(20, 0))
+
+    def open_github(self):
+        import webbrowser
+        webbrowser.open("https://github.com/mehmetkahya0")
+        
+        
     def quit(self):
         print("Quitting application")
         return super().quit()
