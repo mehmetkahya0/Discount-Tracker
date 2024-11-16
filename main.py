@@ -148,7 +148,6 @@ class PriceTracker:
             )
             return cursor.fetchall()
 
-
     def track_product(self, product: ProductConfig) -> Optional[float]:
         site_type = self.get_site_type(product.url)
         try:
@@ -233,6 +232,14 @@ class PriceTrackerGUI(tk.Tk):
         self.create_table()
         self.create_controls()
         self.after(0, self.update_prices)  # Immediate update
+
+        # Add ascii logo to the window
+        # Add ascii logo to the window
+        logo_text = """
+█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
+█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
+        ttk.Label(self.main_frame, text=logo_text, font=("Courier", 12, "bold")).pack(
+            pady=(10, 20))
 
     def create_table(self):
         columns = ('Product', 'Current Price',
@@ -581,6 +588,14 @@ class HistoryDialog(tk.Toplevel):
         super().__init__(parent)
         self.title("Price History")
         self.geometry("800x600")
+
+        # Add ascii logo to the window
+        logo_text = """
+█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
+█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
+
+        ttk.Label(self, text=logo_text, font=("Courier", 12, "bold")).pack(
+            pady=(10, 20))
 
         fig, ax = plt.subplots(figsize=(10, 6))
         canvas = FigureCanvasTkAgg(fig, master=self)
