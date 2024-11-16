@@ -188,9 +188,13 @@ class PriceTracker:
             ctypes.windll.kernel32.Beep(1000, 500)  # Beep sound
 
             logging.info(f"Notification sent for {short_name}")
+            print(f"{Fore.GREEN}Notification sent for {short_name}{Style.RESET_ALL}")
         except Exception as e:
             logging.error(f"Notification failed: {str(e)}")
-
+            
+            print(f"{Fore.RED}Notification failed: {str(e)}{Style.RESET_ALL}")
+        
+            
     def track_product(self, product: ProductConfig) -> Optional[float]:
         site_type = self.get_site_type(product.url)
         try:
@@ -288,11 +292,14 @@ class PriceTrackerGUI(tk.Tk):
     def add_product(self):
         dialog = AddProductDialog(self)
         self.wait_window(dialog)
+        print("Adding product")
 
     def remove_product(self):
         selected = self.tree.selection()
         if selected:
+            print("Removing product")
             self.tree.delete(selected)
+            
 
     def show_history(self):
         selected = self.tree.selection()
@@ -302,6 +309,7 @@ class PriceTrackerGUI(tk.Tk):
             HistoryDialog(self, url, self.tracker)
             
     def quit(self):
+        print("Quitting application")
         return super().quit()
 
     def create_table(self):
