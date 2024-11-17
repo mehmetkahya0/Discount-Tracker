@@ -17,6 +17,7 @@ import webbrowser
 import csv
 import psutil
 import time
+from colorama import Fore, Style
 
 
 start_time = time.time()
@@ -25,6 +26,7 @@ start_time = time.time()
 if hasattr(ctypes, 'windll'):
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
+
 @dataclass
 class ProductConfig:
     url: str
@@ -32,6 +34,7 @@ class ProductConfig:
     name: str = ""
     last_price: Optional[float] = None
     last_check: Optional[datetime] = None
+
 
 class PriceTracker:
     VERSION = "1.0"
@@ -146,7 +149,8 @@ class PriceTracker:
                 price_element = soup.select_one(selector)
                 if price_element:
                     price_text = price_element.get_text().strip()
-                    price_text = price_text.replace('TL', '').replace('₺', '').replace(' ', '')
+                    price_text = price_text.replace(
+                        'TL', '').replace('₺', '').replace(' ', '')
                     price_text = price_text.replace('.', '').replace(',', '.')
                     return float(price_text)
             return None
@@ -200,7 +204,8 @@ class PriceTracker:
 
     def send_notification(self, product: ProductConfig, price: float):
         try:
-            short_name = f"{product.name[:30]}..." if len(product.name) > 30 else product.name
+            short_name = f"{product.name[:30]}..." if len(
+                product.name) > 30 else product.name
             message = f"""
 💰 Current Price: ₺{price:.2f}
 🎯 Target Price: ₺{product.threshold:.2f}
@@ -220,6 +225,7 @@ class PriceTracker:
         except Exception as e:
             logging.error(f"Notification failed: {str(e)}")
 
+
 class PriceTrackerGUI(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -227,7 +233,8 @@ class PriceTrackerGUI(tk.Tk):
         self.geometry("1000x700")
         self.tracker = PriceTracker()
         self.products_data = []  # Initialize products data list
-        self.monitoring = tk.BooleanVar(value=False)  # Variable to control monitoring
+        # Variable to control monitoring
+        self.monitoring = tk.BooleanVar(value=False)
         self.main_frame = ttk.Frame(self)
         self.main_frame.pack(expand=True, fill='both', padx=10, pady=10)
         self.create_table()
@@ -242,6 +249,22 @@ class PriceTrackerGUI(tk.Tk):
         ttk.Label(self.main_frame, text=logo_text, font=("Courier", 12, "bold")).pack(
             pady=(10, 20))
 
+        width = 56  # Fixed width for consistent display
+
+        ascii_art = f"""{Fore.CYAN}
+    ╭{'─' * width}╮
+    │{' ' * (width+0)}│
+    │{' '*4}█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█{' '*5}│
+    │{' '*4}█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄{' '*5}│
+    │{' ' * (width+0)}│
+    │{' '*2}• Author: {Fore.GREEN}Mehmet Kahya{Fore.CYAN:<32}{' '*5}│
+    │{' '*2}• Github: {Fore.GREEN}@mehmetkahya0{Fore.CYAN:<32}{' '*4}│
+    │{' '*2}• Version: {Fore.YELLOW}1.0{Fore.CYAN:<35}{' '*10}│
+    │{' ' * (width+0)}│
+    ╰{'─' * width}╯{Style.RESET_ALL}"""
+
+        print(ascii_art)
+
     def create_resource_usage_label(self):
         resource_frame = ttk.Frame(self.main_frame)
         resource_frame.pack(pady=(5, 5), fill='x')
@@ -254,7 +277,8 @@ class PriceTrackerGUI(tk.Tk):
         )
         self.monitor_checkbox.pack(side='left')
 
-        self.resource_label = ttk.Label(resource_frame, text="", font=("Helvetica", 10))
+        self.resource_label = ttk.Label(
+            resource_frame, text="", font=("Helvetica", 10))
         self.resource_label.pack(side='left', padx=(10, 0))
 
     def toggle_resource_monitoring(self):
@@ -276,7 +300,8 @@ class PriceTrackerGUI(tk.Tk):
 
             # Update the label text
             self.resource_label.config(
-                text=f"CPU Usage: {cpu_usage:.1f}%   RAM Usage: {ram_usage:.1f} MB"
+                text=f"CPU Usage: {cpu_usage:.1f}%   RAM Usage: {
+                    ram_usage:.1f} MB"
             )
 
             # Schedule to update every second
@@ -454,7 +479,8 @@ class PriceTrackerGUI(tk.Tk):
 
                 with open('config.json', 'r+', encoding='utf-8') as f:
                     config = json.load(f)
-                    config['products'] = [p for p in config['products'] if p['url'] != url]
+                    config['products'] = [
+                        p for p in config['products'] if p['url'] != url]
                     f.seek(0)
                     json.dump(config, f, indent=4)
                     f.truncate()
@@ -486,7 +512,8 @@ class PriceTrackerGUI(tk.Tk):
         if filename:
             with open(filename, 'w', newline='', encoding='utf-8') as f:
                 writer = csv.writer(f)
-                writer.writerow(['Product', 'Current Price', 'Target', 'Site', 'Status'])
+                writer.writerow(['Product', 'Current Price',
+                                'Target', 'Site', 'Status'])
                 for item in self.tree.get_children():
                     values = self.tree.item(item)['values']
                     writer.writerow(values[:-1])  # Exclude URL
@@ -513,7 +540,8 @@ class PriceTrackerGUI(tk.Tk):
         logo_text = """
 █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
 █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
-        logo = ttk.Label(main_frame, text=logo_text, font=("Courier", 12, "bold"))
+        logo = ttk.Label(main_frame, text=logo_text,
+                         font=("Courier", 12, "bold"))
         logo.pack(pady=(0, 20))
 
         # Version info
@@ -556,7 +584,8 @@ class PriceTrackerGUI(tk.Tk):
             foreground="blue"
         )
         github_link.pack()
-        github_link.bind("<Button-1>", lambda e: webbrowser.open("https://github.com/mehmetkahya0"))
+        github_link.bind(
+            "<Button-1>", lambda e: webbrowser.open("https://github.com/mehmetkahya0"))
 
         # Close button
         ttk.Button(
@@ -564,21 +593,24 @@ class PriceTrackerGUI(tk.Tk):
             text="Close",
             command=about.destroy
         ).pack(pady=(20, 0))
-        
+
     # Elapsed time
     elapsed_time = time.time() - start_time
     print(f"Elapsed time: {elapsed_time:.2f} seconds")
+
 
 class AddProductDialog(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)
         self.title("Add Product")
 
-        ttk.Label(self, text="URL:").grid(row=0, column=0, padx=5, pady=5, sticky='e')
+        ttk.Label(self, text="URL:").grid(
+            row=0, column=0, padx=5, pady=5, sticky='e')
         self.url = ttk.Entry(self, width=50)
         self.url.grid(row=0, column=1, padx=5, pady=5)
 
-        ttk.Label(self, text="Threshold (₺):").grid(row=1, column=0, padx=5, pady=5, sticky='e')
+        ttk.Label(self, text="Threshold (₺):").grid(
+            row=1, column=0, padx=5, pady=5, sticky='e')
         self.threshold = ttk.Entry(self)
         self.threshold.grid(row=1, column=1, padx=5, pady=5)
 
@@ -597,7 +629,8 @@ class AddProductDialog(tk.Toplevel):
                 return
 
             if not threshold or threshold <= 0:
-                messagebox.showerror("Error", "Threshold must be a positive number")
+                messagebox.showerror(
+                    "Error", "Threshold must be a positive number")
                 return
 
             with open('config.json', 'r+', encoding='utf-8') as f:
@@ -621,6 +654,7 @@ class AddProductDialog(tk.Toplevel):
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
+
 class HistoryDialog(tk.Toplevel):
     def __init__(self, parent, url, tracker):
         super().__init__(parent)
@@ -634,14 +668,18 @@ class HistoryDialog(tk.Toplevel):
 
         history = tracker.get_price_history(url)
         if history:
-            dates = [datetime.strptime(h[0], '%Y-%m-%d %H:%M:%S') for h in history]
+            dates = [datetime.strptime(h[0], '%Y-%m-%d %H:%M:%S')
+                     for h in history]
             prices = [h[1] for h in history]
 
-            ax.plot(dates, prices, 'bo-', markersize=6, linewidth=2, label='Price')
+            ax.plot(dates, prices, 'bo-', markersize=6,
+                    linewidth=2, label='Price')
             ax.grid(True, linestyle='--', alpha=0.7)
-            ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'₺{x:,.2f}'))
+            ax.yaxis.set_major_formatter(
+                plt.FuncFormatter(lambda x, p: f'₺{x:,.2f}'))
             plt.xticks(rotation=45, ha='right')
-            ax.set_title('Price History', pad=20, fontsize=12, fontweight='bold')
+            ax.set_title('Price History', pad=20,
+                         fontsize=12, fontweight='bold')
             ax.set_xlabel('Date', labelpad=10)
             ax.set_ylabel('Price (TRY)', labelpad=10)
             ax.legend()
@@ -666,9 +704,11 @@ class HistoryDialog(tk.Toplevel):
         plt.tight_layout()
         canvas.draw()
 
+
 def main():
     app = PriceTrackerGUI()
     app.mainloop()
+
 
 if __name__ == "__main__":
     main()
