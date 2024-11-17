@@ -12,13 +12,13 @@ from datetime import datetime
 import ctypes
 import sqlite3
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+
 import webbrowser
 import csv
 import psutil
 import time
 from colorama import Fore, Style
-
 
 start_time = time.time()
 
@@ -663,7 +663,12 @@ class HistoryDialog(tk.Toplevel):
 
         fig, ax = plt.subplots(figsize=(10, 6))
         canvas = FigureCanvasTkAgg(fig, master=self)
-        canvas.draw()
+
+        toolbar_frame = tk.Frame(self)
+        toolbar_frame.pack(side='top', fill='x')
+        toolbar = NavigationToolbar2Tk(canvas, toolbar_frame)
+        toolbar.update()
+
         canvas.get_tk_widget().pack(expand=True, fill='both', padx=10, pady=10)
 
         history = tracker.get_price_history(url)
@@ -677,7 +682,7 @@ class HistoryDialog(tk.Toplevel):
             ax.grid(True, linestyle='--', alpha=0.7)
             ax.yaxis.set_major_formatter(
                 plt.FuncFormatter(lambda x, p: f'₺{x:,.2f}'))
-            plt.xticks(rotation=45, ha='right')
+            plt.setp(ax.get_xticklabels(), rotation=45, ha='right')
             ax.set_title('Price History', pad=20,
                          fontsize=12, fontweight='bold')
             ax.set_xlabel('Date', labelpad=10)
