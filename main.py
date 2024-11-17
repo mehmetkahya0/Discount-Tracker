@@ -16,6 +16,10 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import webbrowser
 import csv
 import psutil
+import time
+
+
+start_time = time.time()
 
 # For Windows High DPI scaling
 if hasattr(ctypes, 'windll'):
@@ -560,6 +564,10 @@ class PriceTrackerGUI(tk.Tk):
             text="Close",
             command=about.destroy
         ).pack(pady=(20, 0))
+        
+    # Elapsed time
+    elapsed_time = time.time() - start_time
+    print(f"Elapsed time: {elapsed_time:.2f} seconds")
 
 class AddProductDialog(tk.Toplevel):
     def __init__(self, parent):
