@@ -1,3 +1,18 @@
+"""
+█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
+█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄ @mehmetkahya0
+"""
+# Mehmet Kahya @mehmetkahya0
+# Price Tracker v1.0
+
+# A price tracker application with GUI using Tkinter and SQLite
+# Tracks prices of products from Amazon, Hepsiburada, and Trendyol
+# Features include adding/removing products, viewing price history, and exporting to CSV
+# Supports notifications with system beep and message box
+# Includes resource monitoring for CPU and RAM usage
+# Uses Matplotlib for plotting price history
+
+# 18 Nov 2024 - Initial version
 # main.py
 
 import tkinter as tk
@@ -13,13 +28,11 @@ import ctypes
 import sqlite3
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
-
 import webbrowser
 import csv
 import psutil
 import time
 from colorama import Fore, Style
-
 start_time = time.time()
 
 # For Windows High DPI scaling
