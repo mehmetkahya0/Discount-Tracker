@@ -22,7 +22,6 @@ import psutil
 if hasattr(ctypes, 'windll'):
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
-
 @dataclass
 class ProductConfig:
     url: str
@@ -30,7 +29,6 @@ class ProductConfig:
     name: str = ""
     last_price: Optional[float] = None
     last_check: Optional[datetime] = None
-
 
 class PriceTracker:
     VERSION = "1.0"
@@ -145,8 +143,7 @@ class PriceTracker:
                 price_element = soup.select_one(selector)
                 if price_element:
                     price_text = price_element.get_text().strip()
-                    price_text = price_text.replace(
-                        'TL', '').replace('₺', '').replace(' ', '')
+                    price_text = price_text.replace('TL', '').replace('₺', '').replace(' ', '')
                     price_text = price_text.replace('.', '').replace(',', '.')
                     return float(price_text)
             return None
@@ -200,8 +197,7 @@ class PriceTracker:
 
     def send_notification(self, product: ProductConfig, price: float):
         try:
-            short_name = f"{product.name[:30]}..." if len(
-                product.name) > 30 else product.name
+            short_name = f"{product.name[:30]}..." if len(product.name) > 30 else product.name
             message = f"""
 💰 Current Price: ₺{price:.2f}
 🎯 Target Price: ₺{product.threshold:.2f}
@@ -221,30 +217,27 @@ class PriceTracker:
         except Exception as e:
             logging.error(f"Notification failed: {str(e)}")
 
-
 class PriceTrackerGUI:
     def __init__(self):
-        self.root = ThemedTk(theme="breeze")  # Use a modern theme
+        # Use default theme 'arc'
+        self.root = ThemedTk(theme="arc")
         self.root.title("Price Tracker v1.0")
-        self.root.geometry("1000x700")
+        self.root.geometry("1500x700")
         self.tracker = PriceTracker()
         self.products_data = []  # Initialize products data list
-        # Variable to control monitoring
-        self.monitoring = tk.BooleanVar(value=False)
+        self.monitoring = tk.BooleanVar(value=False)  # Variable to control monitoring
         self.main_frame = ttk.Frame(self.root)
         self.main_frame.pack(expand=True, fill='both', padx=10, pady=10)
+        self.create_theme_option()  # Add theme selection option
         self.create_table()
         self.create_controls()
         self.create_resource_usage_label()
-        self.after_id = self.root.after(
-            0, self.update_prices)  # Immediate update
+        self.after_id = self.root.after(0, self.update_prices)  # Immediate update
 
-
-        # Add ASCII logo to the window
-        logo_text = """\
-        █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
-        █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
-
+                        # ASCII Logo
+        logo_text = """
+█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
+█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
         style = ttk.Style()
         style.configure("Green.TLabel", foreground="green",
                         font=("Consolas", 10, "bold"))
@@ -252,9 +245,31 @@ class PriceTrackerGUI:
         ttk.Label(
             self.main_frame,
             text=logo_text,
-            style="Green.TLabel"
+            style="Green.TLabel",
+            justify='center'
         ).pack(pady=(10, 20))
+
         self.root.mainloop()
+
+    def create_theme_option(self):
+        theme_frame = ttk.Frame(self.main_frame)
+        theme_frame.pack(fill='x', pady=(5, 5))
+
+        ttk.Label(theme_frame, text="Select Theme:").pack(side='left', padx=(5, 5))
+        self.theme_var = tk.StringVar(value='arc')
+
+        themes = sorted(self.root.get_themes())
+        self.theme_menu = ttk.OptionMenu(
+            theme_frame,
+            self.theme_var,
+            self.theme_var.get(),
+            *themes,
+            command=self.change_theme
+        )
+        self.theme_menu.pack(side='left')
+
+    def change_theme(self, theme_name):
+        self.root.set_theme(theme_name)
 
     def create_resource_usage_label(self):
         resource_frame = ttk.Frame(self.main_frame)
@@ -515,11 +530,11 @@ class PriceTrackerGUI:
         main_frame = ttk.Frame(about, padding="20")
         main_frame.pack(fill='both', expand=True)
 
-        # ASCII Logo
+                # ASCII Logo
         logo_text = """
 █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
 █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
-        logo = ttk.Label(main_frame, text=logo_text, font=("Consolas", 10, "bold"))
+        logo = ttk.Label(main_frame, text=logo_text, style="Green.TLabel", justify='center')
         logo.pack(pady=(0, 20))
 
         # Version info
