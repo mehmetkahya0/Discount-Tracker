@@ -1,0 +1,11 @@
+Todo | 21.11.2024
+---------------------
+[] Add temu.
+[] Add aliexpress
+[] Add ebay
+[] Add n11
+[] Add other e-commerance websites.
+--
+[] Make .exe file using libs
+[] Share on reddit!
+[] Make analytics services or smth??????? search it!

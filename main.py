@@ -53,7 +53,9 @@ class PriceTracker:
             'Accept': ('text/html,application/xhtml+xml,application/xml;'
                        'q=0.9,*/*;q=0.8'),
             'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
-        }
+        },
+        # Add temu website.
+        
     }
 
     SELECTORS = {
@@ -75,7 +77,8 @@ class PriceTracker:
         'trendyol': {
             'price': ['span.prc-dsc', 'span.prc-org', 'span.product-price'],
             'title': 'h1.pr-new-br'
-        }
+        },
+
     }
 
     def setup_session(self) -> requests.Session:
