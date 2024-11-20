@@ -22,6 +22,7 @@ import psutil
 if hasattr(ctypes, 'windll'):
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
+
 @dataclass
 class ProductConfig:
     url: str
@@ -29,6 +30,7 @@ class ProductConfig:
     name: str = ""
     last_price: Optional[float] = None
     last_check: Optional[datetime] = None
+
 
 class PriceTracker:
     VERSION = "1.0"
@@ -143,7 +145,8 @@ class PriceTracker:
                 price_element = soup.select_one(selector)
                 if price_element:
                     price_text = price_element.get_text().strip()
-                    price_text = price_text.replace('TL', '').replace('₺', '').replace(' ', '')
+                    price_text = price_text.replace(
+                        'TL', '').replace('₺', '').replace(' ', '')
                     price_text = price_text.replace('.', '').replace(',', '.')
                     return float(price_text)
             return None
@@ -197,7 +200,8 @@ class PriceTracker:
 
     def send_notification(self, product: ProductConfig, price: float):
         try:
-            short_name = f"{product.name[:30]}..." if len(product.name) > 30 else product.name
+            short_name = f"{product.name[:30]}..." if len(
+                product.name) > 30 else product.name
             message = f"""
 💰 Current Price: ₺{price:.2f}
 🎯 Target Price: ₺{product.threshold:.2f}
@@ -217,6 +221,7 @@ class PriceTracker:
         except Exception as e:
             logging.error(f"Notification failed: {str(e)}")
 
+
 class PriceTrackerGUI:
     def __init__(self):
         self.root = ThemedTk(theme="breeze")  # Use a modern theme
@@ -224,24 +229,31 @@ class PriceTrackerGUI:
         self.root.geometry("1000x700")
         self.tracker = PriceTracker()
         self.products_data = []  # Initialize products data list
-        self.monitoring = tk.BooleanVar(value=False)  # Variable to control monitoring
+        # Variable to control monitoring
+        self.monitoring = tk.BooleanVar(value=False)
         self.main_frame = ttk.Frame(self.root)
         self.main_frame.pack(expand=True, fill='both', padx=10, pady=10)
         self.create_table()
         self.create_controls()
         self.create_resource_usage_label()
-        self.after_id = self.root.after(0, self.update_prices)  # Immediate update
+        self.after_id = self.root.after(
+            0, self.update_prices)  # Immediate update
+
 
         # Add ASCII logo to the window
-        logo_text = """
-█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
-█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
+        logo_text = """\
+        █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
+        █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
+
+        style = ttk.Style()
+        style.configure("Green.TLabel", foreground="green",
+                        font=("Consolas", 10, "bold"))
+
         ttk.Label(
             self.main_frame,
             text=logo_text,
-            font=("Consolas", 10, "bold")
+            style="Green.TLabel"
         ).pack(pady=(10, 20))
-
         self.root.mainloop()
 
     def create_resource_usage_label(self):
