@@ -1,8 +1,9 @@
 █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
 █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄
-|   Todo     |    21.11.2024    | Mehmet Kahya|
+|  Todo     |    22.11.2024    | Mehmet Kahya |
 |     ------------------------------------    |
         STAGE 1
+        [] Change treshold button.
         [] Add temu.
         [] Add aliexpress
         [] Add ebay
@@ -18,8 +19,6 @@
         [] Send price drop notification via e-mail
         [] Make server for check updates?????
         [] Deploy with flask or django to internet
-
-
 
 
 

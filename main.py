@@ -1,5 +1,4 @@
 # main.py
-
 import tkinter as tk
 from ttkthemes import ThemedTk
 from tkinter import ttk, messagebox, filedialog
@@ -22,6 +21,7 @@ import psutil
 if hasattr(ctypes, 'windll'):
     ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
+
 @dataclass
 class ProductConfig:
     url: str
@@ -29,6 +29,7 @@ class ProductConfig:
     name: str = ""
     last_price: Optional[float] = None
     last_check: Optional[datetime] = None
+
 
 class PriceTracker:
     VERSION = "1.0"
@@ -54,8 +55,13 @@ class PriceTracker:
                        'q=0.9,*/*;q=0.8'),
             'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
         },
-        # Add temu website.
-        
+        'temu': {
+            'User-Agent': ('Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+                           ' AppleWebKit/537.36 (KHTML, like Gecko)'
+                           ' Chrome/91.0.4472.124 Safari/537.36'),
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'tr-TR,tr;q=0.9,en-US;q=0.8,en;q=0.7',
+        },
     }
 
     SELECTORS = {
@@ -78,7 +84,10 @@ class PriceTracker:
             'price': ['span.prc-dsc', 'span.prc-org', 'span.product-price'],
             'title': 'h1.pr-new-br'
         },
-
+        'temu': {
+            'price': ['span.product-price__current-price'],
+            'title': 'h1.product-title__title'
+        },
     }
 
     def setup_session(self) -> requests.Session:
@@ -138,6 +147,8 @@ class PriceTracker:
             return 'hepsiburada'
         elif 'trendyol' in url:
             return 'trendyol'
+        elif 'temu' in url:
+            return 'temu'
         return 'amazon'  # Default to Amazon
 
     def extract_price(self, soup: BeautifulSoup, site_type: str) -> Optional[float]:
@@ -146,7 +157,8 @@ class PriceTracker:
                 price_element = soup.select_one(selector)
                 if price_element:
                     price_text = price_element.get_text().strip()
-                    price_text = price_text.replace('TL', '').replace('₺', '').replace(' ', '')
+                    price_text = price_text.replace(
+                        'TL', '').replace('₺', '').replace(' ', '')
                     price_text = price_text.replace('.', '').replace(',', '.')
                     return float(price_text)
             return None
@@ -200,7 +212,8 @@ class PriceTracker:
 
     def send_notification(self, product: ProductConfig, price: float):
         try:
-            short_name = f"{product.name[:30]}..." if len(product.name) > 30 else product.name
+            short_name = f"{product.name[:30]}..." if len(
+                product.name) > 30 else product.name
             message = f"""
 💰 Current Price: ₺{price:.2f}
 🎯 Target Price: ₺{product.threshold:.2f}
@@ -208,7 +221,6 @@ class PriceTracker:
 
 {product.url}
 """
-            MessageBox = ctypes.windll.user32.MessageBoxW
             MB_ICONINFORMATION = 0x40
 
             ctypes.windll.user32.MessageBoxW(
@@ -220,6 +232,7 @@ class PriceTracker:
         except Exception as e:
             logging.error(f"Notification failed: {str(e)}")
 
+
 class PriceTrackerGUI:
     def __init__(self):
         # Use default theme 'arc'
@@ -228,16 +241,18 @@ class PriceTrackerGUI:
         self.root.geometry("1500x700")
         self.tracker = PriceTracker()
         self.products_data = []  # Initialize products data list
-        self.monitoring = tk.BooleanVar(value=False)  # Variable to control monitoring
+        # Variable to control monitoring
+        self.monitoring = tk.BooleanVar(value=False)
         self.main_frame = ttk.Frame(self.root)
         self.main_frame.pack(expand=True, fill='both', padx=10, pady=10)
         self.create_theme_option()  # Add theme selection option
         self.create_table()
         self.create_controls()
         self.create_resource_usage_label()
-        self.after_id = self.root.after(0, self.update_prices)  # Immediate update
+        self.after_id = self.root.after(
+            0, self.update_prices)  # Immediate update
 
-                        # ASCII Logo
+        # ASCII Logo
         logo_text = """
 █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
 █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
@@ -258,7 +273,8 @@ class PriceTrackerGUI:
         theme_frame = ttk.Frame(self.main_frame)
         theme_frame.pack(fill='x', pady=(5, 5))
 
-        ttk.Label(theme_frame, text="Select Theme:").pack(side='left', padx=(5, 5))
+        ttk.Label(theme_frame, text="Select Theme:").pack(
+            side='left', padx=(5, 5))
         self.theme_var = tk.StringVar(value='arc')
 
         themes = sorted(self.root.get_themes())
@@ -286,7 +302,8 @@ class PriceTrackerGUI:
         )
         self.monitor_checkbox.pack(side='left')
 
-        self.resource_label = ttk.Label(resource_frame, text="", font=("Helvetica", 10))
+        self.resource_label = ttk.Label(
+            resource_frame, text="", font=("Helvetica", 10))
         self.resource_label.pack(side='left', padx=(10, 0))
 
     def toggle_resource_monitoring(self):
@@ -302,7 +319,8 @@ class PriceTrackerGUI:
             cpu_usage = process.cpu_percent(interval=0)
 
             self.resource_label.config(
-                text=f"CPU Usage: {cpu_usage:.1f}%   RAM Usage: {ram_usage:.1f} MB"
+                text=f"CPU Usage: {cpu_usage:.1f}%   RAM Usage: {
+                    ram_usage:.1f} MB"
             )
             self.root.after(1000, self.update_resource_usage)
         else:
@@ -313,7 +331,8 @@ class PriceTrackerGUI:
         style.configure("Treeview.Heading", font=("Helvetica", 10, "bold"))
         style.configure("Treeview", font=("Helvetica", 10))
 
-        columns = ('Product', 'Current Price', 'Target', 'Site', 'Status', 'URL')
+        columns = ('Product', 'Current Price',
+                   'Target', 'Site', 'Status', 'URL')
         self.tree = ttk.Treeview(
             self.main_frame, columns=columns, show='headings', style="Treeview"
         )
@@ -351,6 +370,11 @@ class PriceTrackerGUI:
         ttk.Button(
             left_frame, text="Remove Product",
             command=self.remove_product
+        ).pack(side='left', padx=5, pady=5)
+
+        ttk.Button(
+            left_frame, text="Change Threshold",
+            command=self.change_threshold
         ).pack(side='left', padx=5, pady=5)
 
         ttk.Button(
@@ -449,7 +473,8 @@ class PriceTrackerGUI:
         self.show_products(self.products_data)
 
         # Schedule the next update
-        self.after_id = self.root.after(300000, self.update_prices)  # Update every 5 minutes
+        self.after_id = self.root.after(
+            300000, self.update_prices)  # Update every 5 minutes
 
     def show_products(self, products):
         self.tree.delete(*self.tree.get_children())
@@ -478,12 +503,63 @@ class PriceTrackerGUI:
 
                 with open('config.json', 'r+', encoding='utf-8') as f:
                     config = json.load(f)
-                    config['products'] = [p for p in config['products'] if p['url'] != url]
+                    config['products'] = [
+                        p for p in config['products'] if p['url'] != url]
                     f.seek(0)
                     json.dump(config, f, indent=4)
                     f.truncate()
 
                 self.tree.delete(selected)
+                self.update_prices()
+
+    def change_threshold(self):
+        selected = self.tree.selection()
+        if not selected:
+            messagebox.showwarning(
+                "Warning", "Please select a product to change its threshold.")
+            return
+
+        item = self.tree.item(selected[0])
+        url = item['values'][5]
+        current_threshold_str = item['values'][2]  # e.g., '₺123.45'
+
+        try:
+            # Extract numeric value from the threshold string
+            current_threshold = float(
+                current_threshold_str.replace('₺', '').replace(',', '.'))
+        except ValueError:
+            messagebox.showerror("Error", "Invalid threshold format.")
+            return
+
+        dialog = ChangeThresholdDialog(self.root, current_threshold)
+        self.root.wait_window(dialog.top)
+
+        if dialog.new_threshold is not None:
+            try:
+                new_threshold = float(dialog.new_threshold.replace(',', '.'))
+                if new_threshold <= 0:
+                    raise ValueError
+
+                with open('config.json', 'r+', encoding='utf-8') as f:
+                    config = json.load(f)
+                    for product in config['products']:
+                        if product['url'] == url:
+                            product['threshold'] = new_threshold
+                            break
+                    f.seek(0)
+                    json.dump(config, f, indent=4)
+                    f.truncate()
+
+                self.update_prices()
+                messagebox.showinfo(
+                    "Success", "Threshold updated successfully.")
+
+            except ValueError:
+                messagebox.showerror(
+                    "Error", "Please enter a valid positive number for threshold.")
+            except Exception as e:
+                messagebox.showerror(
+                    "Error", f"Failed to update threshold: {str(e)}")
 
     def show_history(self):
         selected = self.tree.selection()
@@ -508,13 +584,19 @@ class PriceTrackerGUI:
             filetypes=[('CSV files', '*.csv')]
         )
         if filename:
-            with open(filename, 'w', newline='', encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerow(['Product', 'Current Price', 'Target', 'Site', 'Status'])
-                for item in self.tree.get_children():
-                    values = self.tree.item(item)['values']
-                    writer.writerow(values[:-1])  # Exclude URL
-            messagebox.showinfo("Export CSV", f"Data exported to {filename}")
+            try:
+                with open(filename, 'w', newline='', encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerow(
+                        ['Product', 'Current Price', 'Target', 'Site', 'Status'])
+                    for item in self.tree.get_children():
+                        values = self.tree.item(item)['values']
+                        writer.writerow(values[:-1])  # Exclude URL
+                messagebox.showinfo(
+                    "Export CSV", f"Data exported to {filename}")
+            except Exception as e:
+                messagebox.showerror(
+                    "Error", f"Failed to export CSV: {str(e)}")
 
     def info(self):
         about = tk.Toplevel(self.root)
@@ -533,11 +615,12 @@ class PriceTrackerGUI:
         main_frame = ttk.Frame(about, padding="20")
         main_frame.pack(fill='both', expand=True)
 
-                # ASCII Logo
+        # ASCII Logo
         logo_text = """
 █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
 █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄"""
-        logo = ttk.Label(main_frame, text=logo_text, style="Green.TLabel", justify='center')
+        logo = ttk.Label(main_frame, text=logo_text,
+                         style="Green.TLabel", justify='center')
         logo.pack(pady=(0, 20))
 
         # Version info
@@ -557,7 +640,7 @@ class PriceTrackerGUI:
         sites_frame = ttk.Frame(main_frame)
         sites_frame.pack(pady=(0, 20))
 
-        for site in ["Amazon.com.tr", "Trendyol", "Hepsiburada"]:
+        for site in ["Amazon.com.tr", "Trendyol", "Hepsiburada", "Temu"]:
             ttk.Label(
                 sites_frame,
                 text=f"• {site}",
@@ -580,7 +663,8 @@ class PriceTrackerGUI:
             foreground="blue"
         )
         github_link.pack()
-        github_link.bind("<Button-1>", lambda e: webbrowser.open("https://github.com/mehmetkahya0"))
+        github_link.bind(
+            "<Button-1>", lambda e: webbrowser.open("https://github.com/mehmetkahya0"))
 
         # Close button
         ttk.Button(
@@ -589,36 +673,46 @@ class PriceTrackerGUI:
             command=about.destroy
         ).pack(pady=(20, 0))
 
+
 class AddProductDialog:
     def __init__(self, parent):
         self.top = tk.Toplevel(parent)
         self.top.title("Add Product")
+        self.top.geometry("500x150")
+        self.top.resizable(False, False)
 
-        ttk.Label(self.top, text="URL:").grid(row=0, column=0, padx=5, pady=5, sticky='e')
-        self.url = ttk.Entry(self.top, width=50)
-        self.url.grid(row=0, column=1, padx=5, pady=5)
+        ttk.Label(self.top, text="URL:").grid(
+            row=0, column=0, padx=10, pady=10, sticky='e')
+        self.url = ttk.Entry(self.top, width=60)
+        self.url.grid(row=0, column=1, padx=10, pady=10)
 
-        ttk.Label(self.top, text="Threshold (₺):").grid(row=1, column=0, padx=5, pady=5, sticky='e')
-        self.threshold = ttk.Entry(self.top)
-        self.threshold.grid(row=1, column=1, padx=5, pady=5)
+        ttk.Label(self.top, text="Threshold (₺):").grid(
+            row=1, column=0, padx=10, pady=10, sticky='e')
+        self.threshold = ttk.Entry(self.top, width=20)
+        self.threshold.grid(row=1, column=1, padx=10, pady=10, sticky='w')
 
         ttk.Button(self.top, text="Add", command=self.add).grid(
-            row=2, column=0, columnspan=2, pady=10)
+            row=2, column=0, columnspan=2, pady=10
+        )
 
         self.url.focus_set()
 
     def add(self):
         try:
             url = self.url.get().strip()
-            threshold = float(self.threshold.get().replace(',', '.'))
+            threshold = self.threshold.get().strip()
 
             if not url:
                 messagebox.showerror("Error", "URL cannot be empty")
                 return
 
-            if not threshold or threshold <= 0:
-                messagebox.showerror("Error", "Threshold must be a positive number")
+            if not threshold:
+                messagebox.showerror("Error", "Threshold cannot be empty")
                 return
+
+            threshold_value = float(threshold.replace(',', '.'))
+            if threshold_value <= 0:
+                raise ValueError
 
             with open('config.json', 'r+', encoding='utf-8') as f:
                 config = json.load(f)
@@ -629,7 +723,7 @@ class AddProductDialog:
 
                 config['products'].append({
                     'url': url,
-                    'threshold': threshold
+                    'threshold': threshold_value
                 })
                 f.seek(0)
                 json.dump(config, f, indent=4)
@@ -637,15 +731,53 @@ class AddProductDialog:
 
             self.top.destroy()
         except ValueError:
-            messagebox.showerror("Error", "Invalid threshold value")
+            messagebox.showerror(
+                "Error", "Please enter a valid positive number for threshold.")
         except Exception as e:
-            messagebox.showerror("Error", str(e))
+            messagebox.showerror("Error", f"Failed to add product: {str(e)}")
+
+
+class ChangeThresholdDialog:
+    def __init__(self, parent, current_threshold):
+        self.new_threshold = None
+        self.top = tk.Toplevel(parent)
+        self.top.title("Change Threshold")
+        self.top.geometry("400x150")
+        self.top.resizable(False, False)
+
+        ttk.Label(self.top, text=f"Current Threshold: ₺{
+                  current_threshold:.2f}").pack(pady=10)
+
+        ttk.Label(self.top, text="New Threshold (₺):").pack(pady=5)
+        self.threshold_var = tk.StringVar()
+        self.entry = ttk.Entry(
+            self.top, textvariable=self.threshold_var, width=30)
+        self.entry.pack(pady=5)
+        self.entry.focus_set()
+
+        ttk.Button(self.top, text="Save", command=self.save).pack(pady=10)
+
+    def save(self):
+        threshold = self.threshold_var.get().strip()
+        if not threshold:
+            messagebox.showerror("Error", "Threshold cannot be empty.")
+            return
+        try:
+            self.new_threshold = float(threshold.replace(',', '.'))
+            if self.new_threshold <= 0:
+                raise ValueError
+            self.top.destroy()
+        except ValueError:
+            messagebox.showerror(
+                "Error", "Please enter a valid positive number for threshold.")
+
 
 class HistoryDialog:
     def __init__(self, parent, url, tracker):
         self.top = tk.Toplevel(parent)
         self.top.title("Price History")
         self.top.geometry("800x600")
+        self.top.resizable(True, True)
 
         fig, ax = plt.subplots(figsize=(8, 5))
         canvas = FigureCanvasTkAgg(fig, master=self.top)
@@ -657,23 +789,29 @@ class HistoryDialog:
 
         history = tracker.get_price_history(url)
         if history:
-            dates = [datetime.strptime(h[0], '%Y-%m-%d %H:%M:%S') for h in history]
+            dates = [datetime.strptime(h[0], '%Y-%m-%d %H:%M:%S')
+                     for h in history]
             prices = [h[1] for h in history]
 
-            ax.plot(dates, prices, marker='o', linestyle='-', color='#1f77b4', label='Price')
+            ax.plot(dates, prices, marker='o', linestyle='-',
+                    color='#1f77b4', label='Price')
             ax.fill_between(dates, prices, color='#AED6F1', alpha=0.5)
             ax.grid(True, linestyle='--', alpha=0.7)
-            ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda x, p: f'₺{x:,.2f}'))
+            ax.yaxis.set_major_formatter(
+                plt.FuncFormatter(lambda x, p: f'₺{x:,.2f}'))
             plt.setp(ax.get_xticklabels(), rotation=45, ha='right')
-            ax.set_title('Price History', pad=20, fontsize=14, fontweight='bold')
+            ax.set_title('Price History', pad=20,
+                         fontsize=14, fontweight='bold')
             ax.set_xlabel('Date', fontsize=12)
             ax.set_ylabel('Price (TRY)', fontsize=12)
             ax.legend()
 
             min_price = min(prices)
             max_price = max(prices)
-            ax.axhline(y=min_price, color='green', linestyle='--', alpha=0.5, label='Min Price')
-            ax.axhline(y=max_price, color='red', linestyle='--', alpha=0.5, label='Max Price')
+            ax.axhline(y=min_price, color='green', linestyle='--',
+                       alpha=0.5, label='Min Price')
+            ax.axhline(y=max_price, color='red', linestyle='--',
+                       alpha=0.5, label='Max Price')
             ax.legend()
 
         else:
@@ -686,8 +824,10 @@ class HistoryDialog:
         plt.tight_layout()
         canvas.draw()
 
+
 def main():
     app = PriceTrackerGUI()
+
 
 if __name__ == "__main__":
     main()
