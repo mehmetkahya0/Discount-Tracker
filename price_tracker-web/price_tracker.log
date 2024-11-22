@@ -1,0 +1,129 @@
+2024-11-22 23:39:09,312 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-22 23:39:09,312 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-22 23:39:09,313 - INFO -  * Restarting with stat
+2024-11-22 23:39:09,928 - WARNING -  * Debugger is active!
+2024-11-22 23:39:09,931 - INFO -  * Debugger PIN: 808-148-025
+2024-11-22 23:39:21,747 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:21] "GET / HTTP/1.1" 200 -
+2024-11-22 23:39:21,758 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:21] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:39:23,234 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:23] "GET / HTTP/1.1" 200 -
+2024-11-22 23:39:23,250 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:23] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:39:33,061 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:33] "[32mPOST /add_product HTTP/1.1[0m" 302 -
+2024-11-22 23:39:33,066 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:33] "GET / HTTP/1.1" 200 -
+2024-11-22 23:39:33,078 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:33] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:39:37,938 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:37] "GET / HTTP/1.1" 200 -
+2024-11-22 23:39:37,952 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:37] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:39:41,423 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:41] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-22 23:39:41,510 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:41] "GET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-11-22 23:39:41,513 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:41] "GET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-11-22 23:39:41,562 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:41] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=giKn2FPOFAYR9FUeSVvi HTTP/1.1" 200 -
+2024-11-22 23:39:41,598 - INFO - 127.0.0.1 - - [22/Nov/2024 23:39:41] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-11-22 23:43:14,017 - INFO - 127.0.0.1 - - [22/Nov/2024 23:43:14] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-22 23:43:14,047 - INFO - 127.0.0.1 - - [22/Nov/2024 23:43:14] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-22 23:43:14,048 - INFO - 127.0.0.1 - - [22/Nov/2024 23:43:14] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-22 23:43:14,093 - INFO - 127.0.0.1 - - [22/Nov/2024 23:43:14] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=giKn2FPOFAYR9FUeSVvi HTTP/1.1[0m" 304 -
+2024-11-22 23:47:12,420 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-22 23:47:12,494 - INFO -  * Restarting with stat
+2024-11-22 23:47:13,193 - WARNING -  * Debugger is active!
+2024-11-22 23:47:13,196 - INFO -  * Debugger PIN: 808-148-025
+2024-11-22 23:49:43,606 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-22 23:49:43,607 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-22 23:49:43,608 - INFO -  * Restarting with stat
+2024-11-22 23:49:44,373 - WARNING -  * Debugger is active!
+2024-11-22 23:49:44,377 - INFO -  * Debugger PIN: 808-148-025
+2024-11-22 23:49:48,967 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:48] "GET / HTTP/1.1" 200 -
+2024-11-22 23:49:48,986 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:48] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:49:49,922 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:49] "GET / HTTP/1.1" 200 -
+2024-11-22 23:49:49,936 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:49] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:49:53,684 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:53] "[35m[1mGET /remove/1 HTTP/1.1[0m" 500 -
+2024-11-22 23:49:53,777 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:53] "GET /remove/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+2024-11-22 23:49:53,778 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:53] "GET /remove/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+2024-11-22 23:49:53,824 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:53] "GET /remove/1?__debugger__=yes&cmd=resource&f=console.png&s=a7ZgtOj7z3fC2PNCgUog HTTP/1.1" 200 -
+2024-11-22 23:49:53,864 - INFO - 127.0.0.1 - - [22/Nov/2024 23:49:53] "GET /remove/1?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+2024-11-22 23:50:06,839 - ERROR - Error adding product: (sqlite3.IntegrityError) UNIQUE constraint failed: product.url
+[SQL: INSERT INTO product (name, url, threshold, current_price, last_check) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt', 'https://www.amazon.com.tr/STANLEY-Quick-Paslanmaz-Termos-Turuncu/dp/B0CNTW2G2F/?_encoding=UTF8&ref_=pd_hp_d_atf_ci_mcx_mr_ca_hp_atf_d', 1200.0, 1359.0, '2024-11-22 20:50:06.839517')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2024-11-22 23:50:06,840 - INFO - 127.0.0.1 - - [22/Nov/2024 23:50:06] "[32mPOST /add_product HTTP/1.1[0m" 302 -
+2024-11-22 23:50:08,464 - ERROR - Error adding product: (sqlite3.IntegrityError) UNIQUE constraint failed: product.url
+[SQL: INSERT INTO product (name, url, threshold, current_price, last_check) VALUES (?, ?, ?, ?, ?)]
+[parameters: ('Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt', 'https://www.amazon.com.tr/STANLEY-Quick-Paslanmaz-Termos-Turuncu/dp/B0CNTW2G2F/?_encoding=UTF8&ref_=pd_hp_d_atf_ci_mcx_mr_ca_hp_atf_d', 1200.0, 1359.0, '2024-11-22 20:50:08.463406')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)
+2024-11-22 23:50:08,465 - INFO - 127.0.0.1 - - [22/Nov/2024 23:50:08] "[32mPOST /add_product HTTP/1.1[0m" 302 -
+2024-11-22 23:50:08,470 - INFO - 127.0.0.1 - - [22/Nov/2024 23:50:08] "GET / HTTP/1.1" 200 -
+2024-11-22 23:50:08,494 - INFO - 127.0.0.1 - - [22/Nov/2024 23:50:08] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:50:14,440 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-22 23:50:14,528 - INFO -  * Restarting with stat
+2024-11-22 23:50:15,212 - WARNING -  * Debugger is active!
+2024-11-22 23:50:15,215 - INFO -  * Debugger PIN: 808-148-025
+2024-11-22 23:52:46,367 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-22 23:52:46,430 - INFO -  * Restarting with stat
+2024-11-22 23:52:47,077 - WARNING -  * Debugger is active!
+2024-11-22 23:52:47,079 - INFO -  * Debugger PIN: 808-148-025
+2024-11-22 23:53:00,216 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-22 23:53:00,216 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-22 23:53:00,217 - INFO -  * Restarting with stat
+2024-11-22 23:53:00,861 - WARNING -  * Debugger is active!
+2024-11-22 23:53:00,863 - INFO -  * Debugger PIN: 808-148-025
+2024-11-22 23:53:22,257 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:22] "GET / HTTP/1.1" 200 -
+2024-11-22 23:53:25,298 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:25] "GET / HTTP/1.1" 200 -
+2024-11-22 23:53:25,310 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:25] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:53:27,840 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:27] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-22 23:53:27,922 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:27] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-22 23:53:27,925 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:27] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-22 23:53:27,977 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:27] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=fwIyUgptbNZz4jpb54qX HTTP/1.1" 200 -
+2024-11-22 23:53:36,710 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:36] "[35m[1mGET /remove/1 HTTP/1.1[0m" 500 -
+2024-11-22 23:53:36,735 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:36] "[36mGET /remove/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-22 23:53:36,736 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:36] "[36mGET /remove/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-22 23:53:36,785 - INFO - 127.0.0.1 - - [22/Nov/2024 23:53:36] "GET /remove/1?__debugger__=yes&cmd=resource&f=console.png&s=fwIyUgptbNZz4jpb54qX HTTP/1.1" 200 -
+2024-11-22 23:55:47,092 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-22 23:55:47,160 - INFO -  * Restarting with stat
+2024-11-22 23:55:47,800 - WARNING -  * Debugger is active!
+2024-11-22 23:55:47,803 - INFO -  * Debugger PIN: 808-148-025
+2024-11-22 23:56:26,788 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-22 23:56:26,788 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-22 23:56:26,789 - INFO -  * Restarting with stat
+2024-11-22 23:56:27,399 - WARNING -  * Debugger is active!
+2024-11-22 23:56:27,402 - INFO -  * Debugger PIN: 808-148-025
+2024-11-22 23:56:34,450 - INFO - 127.0.0.1 - - [22/Nov/2024 23:56:34] "GET / HTTP/1.1" 200 -
+2024-11-22 23:56:34,469 - INFO - 127.0.0.1 - - [22/Nov/2024 23:56:34] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:56:36,164 - INFO - 127.0.0.1 - - [22/Nov/2024 23:56:36] "GET / HTTP/1.1" 200 -
+2024-11-22 23:56:36,179 - INFO - 127.0.0.1 - - [22/Nov/2024 23:56:36] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:56:38,038 - INFO - 127.0.0.1 - - [22/Nov/2024 23:56:38] "GET / HTTP/1.1" 200 -
+2024-11-22 23:56:38,058 - INFO - 127.0.0.1 - - [22/Nov/2024 23:56:38] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:56:43,288 - INFO - 127.0.0.1 - - [22/Nov/2024 23:56:43] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:57:08,433 - INFO - 127.0.0.1 - - [22/Nov/2024 23:57:08] "GET / HTTP/1.1" 200 -
+2024-11-22 23:57:08,455 - INFO - 127.0.0.1 - - [22/Nov/2024 23:57:08] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:57:09,216 - INFO - 127.0.0.1 - - [22/Nov/2024 23:57:09] "GET / HTTP/1.1" 200 -
+2024-11-22 23:57:09,238 - INFO - 127.0.0.1 - - [22/Nov/2024 23:57:09] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:57:12,347 - INFO - 127.0.0.1 - - [22/Nov/2024 23:57:12] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-22 23:57:12,436 - INFO - 127.0.0.1 - - [22/Nov/2024 23:57:12] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-22 23:57:12,439 - INFO - 127.0.0.1 - - [22/Nov/2024 23:57:12] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-22 23:57:12,474 - INFO - 127.0.0.1 - - [22/Nov/2024 23:57:12] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=AM0qfJXW3QzMENytCU3m HTTP/1.1" 200 -
+2024-11-22 23:59:18,076 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:18] "GET / HTTP/1.1" 200 -
+2024-11-22 23:59:18,094 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:18] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:59:19,568 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:19] "GET /history/1 HTTP/1.1" 200 -
+2024-11-22 23:59:19,592 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:19] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:59:25,015 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:25] "GET / HTTP/1.1" 200 -
+2024-11-22 23:59:25,026 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:25] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:59:26,306 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:26] "GET /history/1 HTTP/1.1" 200 -
+2024-11-22 23:59:26,331 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:26] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-22 23:59:33,450 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:33] "[35m[1mGET /remove/1 HTTP/1.1[0m" 500 -
+2024-11-22 23:59:33,476 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:33] "[36mGET /remove/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-22 23:59:33,477 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:33] "[36mGET /remove/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-22 23:59:33,526 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:33] "GET /remove/1?__debugger__=yes&cmd=resource&f=console.png&s=AM0qfJXW3QzMENytCU3m HTTP/1.1" 200 -
+2024-11-22 23:59:53,570 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:53] "[32mPOST /add_product HTTP/1.1[0m" 302 -
+2024-11-22 23:59:53,574 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:53] "GET / HTTP/1.1" 200 -
+2024-11-22 23:59:53,589 - INFO - 127.0.0.1 - - [22/Nov/2024 23:59:53] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:00:28,223 - INFO - 127.0.0.1 - - [23/Nov/2024 00:00:28] "[32mPOST /add_product HTTP/1.1[0m" 302 -
+2024-11-23 00:00:28,227 - INFO - 127.0.0.1 - - [23/Nov/2024 00:00:28] "GET / HTTP/1.1" 200 -
+2024-11-23 00:00:28,246 - INFO - 127.0.0.1 - - [23/Nov/2024 00:00:28] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:00:32,368 - INFO - 127.0.0.1 - - [23/Nov/2024 00:00:32] "GET /history/3 HTTP/1.1" 200 -
+2024-11-23 00:00:32,391 - INFO - 127.0.0.1 - - [23/Nov/2024 00:00:32] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:00:34,585 - INFO - 127.0.0.1 - - [23/Nov/2024 00:00:34] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:00:34,617 - INFO - 127.0.0.1 - - [23/Nov/2024 00:00:34] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:05:23,686 - INFO - 127.0.0.1 - - [23/Nov/2024 00:05:23] "GET / HTTP/1.1" 200 -
+2024-11-23 00:05:23,703 - INFO - 127.0.0.1 - - [23/Nov/2024 00:05:23] "[33mGET /static/style.css HTTP/1.1[0m" 404 -

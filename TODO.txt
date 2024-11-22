@@ -1,10 +1,11 @@
 █▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
 █▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄
-|  Todo     |    22.11.2024    | Mehmet Kahya |
+|   Last Update: 22.11.2024   |  Mehmet Kahya |
 |     ------------------------------------    |
         STAGE 1
-        [] Change treshold button.
-        [] Add temu.
+        [X] Change treshold button.
+        [X] Add temu.
+        [X] Write readme.md file
         [] Add aliexpress
         [] Add ebay
         [] Add n11
