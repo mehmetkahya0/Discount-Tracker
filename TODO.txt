@@ -19,7 +19,7 @@
         STAGE 3
         [] Send price drop notification via e-mail
         [] Make server for check updates?????
-        [] Deploy with flask or django to internet
+        [X] Deploy with flask or django to internet
 
 
 

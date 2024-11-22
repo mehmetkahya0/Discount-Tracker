@@ -1,62 +1,119 @@
 <!-- templates/index.html -->
-{% extends "base.html" %}
-
-{% block content %}
+{% extends "base.html" %} {% block content %}
 <div class="row mb-4">
-    <div class="col">
-        <h2>Track New Product</h2>
-        <form action="{{ url_for('add_product') }}" method="POST" class="mb-4">
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <input type="url" name="url" class="form-control" placeholder="Product URL" required>
-                </div>
-                <div class="col-md-4">
-                    <input type="number" name="threshold" class="form-control" placeholder="Price Threshold" step="0.01" min="0.01" required>
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary w-100">Add Product</button>
-                </div>
-            </div>
-        </form>
+  <div class="col">
+    <h2>Track New Product</h2>
+    <form action="{{ url_for('add_product') }}" method="POST" class="mb-4">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <input
+            type="url"
+            name="url"
+            class="form-control"
+            placeholder="Product URL"
+            required
+          />
+        </div>
+        <div class="col-md-4">
+          <input
+            type="number"
+            name="threshold"
+            class="form-control"
+            placeholder="Price Threshold"
+            step="0.01"
+            min="0.01"
+            required
+          />
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary w-100">
+            Add Product
+          </button>
+        </div>
+      </div>
+    </form>
 
-        <h2>Tracked Products</h2>
-        {% if products %}
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>Current Price</th>
-                            <th>Target Price</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for product in products %}
-                        <tr>
-                            <td>{{ product.name }}</td>
-                            <td>₺{{ "%.2f"|format(product.current_price) }}</td>
-                            <td>₺{{ "%.2f"|format(product.threshold) }}</td>
-                            <td>
-                                {% if product.current_price <= product.threshold %}
-                                    <span class="badge bg-success">Below Target</span>
-                                {% else %}
-                                    <span class="badge bg-warning">Above Target</span>
-                                {% endif %}
-                            </td>
-                            <td>
-                                <a href="{{ url_for('price_history', product_id=product.id) }}" class="btn btn-sm btn-info">History</a>
-                                <a href="{{ url_for('remove_product', product_id=product.id) }}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">Remove</a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <p class="text-muted">No products tracked yet.</p>
-        {% endif %}
+    <h2>Tracked Products</h2>
+    {% if products %}
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Current Price</th>
+            <th>Target Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>₺{{ "%.2f"|format(product.current_price) }}</td>
+            <td>₺{{ "%.2f"|format(product.threshold) }}</td>
+            <td>
+              {% if product.current_price <= product.threshold %}
+              <span class="badge bg-success">Below Target</span>
+              {% else %}
+              <span class="badge bg-warning">Above Target</span>
+              {% endif %}
+            </td>
+            <td>
+              <a
+                href="{{ url_for('price_history', product_id=product.id) }}"
+                class="btn btn-sm btn-info"
+                >History</a
+              >
+              <a
+                href="{{ url_for('remove_product', product_id=product.id) }}"
+                class="btn btn-sm btn-danger"
+                onclick="return confirm('Are you sure?')"
+                >Remove</a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
+    {% else %}
+    <p class="text-muted">No products tracked yet.</p>
+    {% endif %}
+  </div>
+</div>
+<div class="ascii-art col-md-6">
+  <pre>
+█▀█ █▀█ █ █▀▀ █▀▀   ▀█▀ █▀█ ▄▀█ █▀▀ █▄▀ █▀▀ █▀█
+█▀▀ █▀▄ █ █▄▄ ██▄    █  █▀▄ █▀█ █▄▄ █ █ ██▄ █▀▄
+  </pre>
+  
+
+  <style>
+    /* styles.css */
+    .ascii-art {
+      background-color: #1e1e1e; /* Dark background */
+      color: #00ff00; /* Bright green text */
+      font-family: "Courier New", Courier, monospace; /* Monospaced font */
+      width: 100%;
+      bottom: 0 !important;
+      left: 0 !important;
+      overflow: auto;
+      white-space: pre; /* Preserve whitespace */
+      height: auto;
+      align-items: center !important;
+      display: flex !important;
+      text-align: center  !important;
+      position: absolute !important;
+      padding: 1rem 0;
+    }
+
+    .ascii-art pre {
+      margin: 0 auto;
+      text-align: center !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+  </style>
 </div>
 {% endblock %}
