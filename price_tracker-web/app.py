@@ -26,8 +26,14 @@ class Product(db.Model):
     threshold = db.Column(db.Float, nullable=False)
     current_price = db.Column(db.Float)
     last_check = db.Column(db.DateTime, default=datetime.utcnow)
-    histories = db.relationship('PriceHistory', backref='product', lazy=True)
-
+    histories = db.relationship(
+        'PriceHistory',
+        backref='product',
+        lazy=True,
+        cascade='all, delete-orphan'
+    )
+    
+    
 class PriceHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
@@ -131,6 +137,11 @@ def price_history(product_id):
 @app.route('/remove/<int:product_id>')
 def remove_product(product_id):
     product = Product.query.get_or_404(product_id)
+    
+    # Delete associated PriceHistory entries
+    for history in product.histories:
+        db.session.delete(history)
+    
     db.session.delete(product)
     db.session.commit()
     flash('Product removed successfully', 'success')

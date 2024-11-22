@@ -127,3 +127,67 @@
 2024-11-23 00:00:34,617 - INFO - 127.0.0.1 - - [23/Nov/2024 00:00:34] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
 2024-11-23 00:05:23,686 - INFO - 127.0.0.1 - - [23/Nov/2024 00:05:23] "GET / HTTP/1.1" 200 -
 2024-11-23 00:05:23,703 - INFO - 127.0.0.1 - - [23/Nov/2024 00:05:23] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:07:05,279 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-23 00:07:05,279 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-23 00:07:05,280 - INFO -  * Restarting with stat
+2024-11-23 00:07:05,906 - WARNING -  * Debugger is active!
+2024-11-23 00:07:05,908 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:07:11,677 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:11] "GET / HTTP/1.1" 200 -
+2024-11-23 00:07:11,694 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:11] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:07:13,331 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:13] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:07:13,355 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:13] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:07:18,946 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:18] "GET /history/2 HTTP/1.1" 200 -
+2024-11-23 00:07:18,974 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:18] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:07:20,977 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:20] "GET /history/3 HTTP/1.1" 200 -
+2024-11-23 00:07:21,001 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:21] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:07:55,170 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:55] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:07:55,201 - INFO - 127.0.0.1 - - [23/Nov/2024 00:07:55] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:08:12,724 - INFO - 127.0.0.1 - - [23/Nov/2024 00:08:12] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:08:12,734 - INFO - 127.0.0.1 - - [23/Nov/2024 00:08:12] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:08:19,457 - INFO - 127.0.0.1 - - [23/Nov/2024 00:08:19] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:08:19,468 - INFO - 127.0.0.1 - - [23/Nov/2024 00:08:19] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:08:31,904 - INFO - 127.0.0.1 - - [23/Nov/2024 00:08:31] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:08:31,917 - INFO - 127.0.0.1 - - [23/Nov/2024 00:08:31] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:08:48,527 - INFO - 127.0.0.1 - - [23/Nov/2024 00:08:48] "GET / HTTP/1.1" 200 -
+2024-11-23 00:08:48,550 - INFO - 127.0.0.1 - - [23/Nov/2024 00:08:48] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:10:06,269 - INFO - 127.0.0.1 - - [23/Nov/2024 00:10:06] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:11:23,554 - INFO - 127.0.0.1 - - [23/Nov/2024 00:11:23] "GET / HTTP/1.1" 200 -
+2024-11-23 00:11:23,573 - INFO - 127.0.0.1 - - [23/Nov/2024 00:11:23] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:11:29,746 - INFO - 127.0.0.1 - - [23/Nov/2024 00:11:29] "GET / HTTP/1.1" 200 -
+2024-11-23 00:11:29,756 - INFO - 127.0.0.1 - - [23/Nov/2024 00:11:29] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:11:38,794 - INFO - 127.0.0.1 - - [23/Nov/2024 00:11:38] "GET / HTTP/1.1" 200 -
+2024-11-23 00:11:38,805 - INFO - 127.0.0.1 - - [23/Nov/2024 00:11:38] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:13:41,453 - INFO - 127.0.0.1 - - [23/Nov/2024 00:13:41] "[35m[1mGET /remove/1 HTTP/1.1[0m" 500 -
+2024-11-23 00:13:41,527 - INFO - 127.0.0.1 - - [23/Nov/2024 00:13:41] "[36mGET /remove/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 00:13:41,528 - INFO - 127.0.0.1 - - [23/Nov/2024 00:13:41] "[36mGET /remove/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 00:13:41,571 - INFO - 127.0.0.1 - - [23/Nov/2024 00:13:41] "GET /remove/1?__debugger__=yes&cmd=resource&f=console.png&s=fBuyAcek99IK6g6slXQI HTTP/1.1" 200 -
+2024-11-23 00:16:04,495 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:16:04,579 - INFO -  * Restarting with stat
+2024-11-23 00:16:05,291 - WARNING -  * Debugger is active!
+2024-11-23 00:16:05,294 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:16:07,218 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:16:07,294 - INFO -  * Restarting with stat
+2024-11-23 00:16:07,947 - WARNING -  * Debugger is active!
+2024-11-23 00:16:07,949 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:16:08,732 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:08] "GET / HTTP/1.1" 200 -
+2024-11-23 00:16:08,746 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:08] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:16:12,242 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:12] "[32mGET /remove/1 HTTP/1.1[0m" 302 -
+2024-11-23 00:16:12,247 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:12] "GET / HTTP/1.1" 200 -
+2024-11-23 00:16:12,260 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:12] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:16:25,391 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:25] "GET / HTTP/1.1" 200 -
+2024-11-23 00:16:25,405 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:25] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:16:29,819 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:29] "[32mGET /remove/3 HTTP/1.1[0m" 302 -
+2024-11-23 00:16:29,823 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:29] "GET / HTTP/1.1" 200 -
+2024-11-23 00:16:29,836 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:29] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:16:43,262 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:43] "[32mPOST /add_product HTTP/1.1[0m" 302 -
+2024-11-23 00:16:43,267 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:43] "GET / HTTP/1.1" 200 -
+2024-11-23 00:16:43,287 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:43] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:16:56,662 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:56] "GET /history/2 HTTP/1.1" 200 -
+2024-11-23 00:16:56,687 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:56] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:16:59,895 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:59] "GET /history/3 HTTP/1.1" 200 -
+2024-11-23 00:16:59,923 - INFO - 127.0.0.1 - - [23/Nov/2024 00:16:59] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:17:09,894 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:17:09,971 - INFO -  * Restarting with stat
+2024-11-23 00:17:10,652 - WARNING -  * Debugger is active!
+2024-11-23 00:17:10,654 - INFO -  * Debugger PIN: 808-148-025
