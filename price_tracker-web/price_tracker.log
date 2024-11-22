@@ -272,3 +272,157 @@
 2024-11-23 00:33:02,605 - INFO - 127.0.0.1 - - [23/Nov/2024 00:33:02] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
 2024-11-23 00:34:59,905 - INFO - 127.0.0.1 - - [23/Nov/2024 00:34:59] "GET /history/3 HTTP/1.1" 200 -
 2024-11-23 00:34:59,936 - INFO - 127.0.0.1 - - [23/Nov/2024 00:34:59] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:42:17,542 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:42:17,612 - INFO -  * Restarting with stat
+2024-11-23 00:42:18,311 - WARNING -  * Debugger is active!
+2024-11-23 00:42:18,314 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:42:25,308 - INFO - 127.0.0.1 - - [23/Nov/2024 00:42:25] "GET / HTTP/1.1" 200 -
+2024-11-23 00:42:25,324 - INFO - 127.0.0.1 - - [23/Nov/2024 00:42:25] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:42:28,141 - INFO - 127.0.0.1 - - [23/Nov/2024 00:42:28] "GET /history/2 HTTP/1.1" 200 -
+2024-11-23 00:42:28,166 - INFO - 127.0.0.1 - - [23/Nov/2024 00:42:28] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:42:40,201 - INFO - 127.0.0.1 - - [23/Nov/2024 00:42:40] "GET / HTTP/1.1" 200 -
+2024-11-23 00:42:40,220 - INFO - 127.0.0.1 - - [23/Nov/2024 00:42:40] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:44:28,665 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-23 00:44:28,665 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-23 00:44:28,666 - INFO -  * Restarting with stat
+2024-11-23 00:44:29,272 - WARNING -  * Debugger is active!
+2024-11-23 00:44:29,275 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:44:48,380 - INFO - 127.0.0.1 - - [23/Nov/2024 00:44:48] "GET / HTTP/1.1" 200 -
+2024-11-23 00:44:48,407 - INFO - 127.0.0.1 - - [23/Nov/2024 00:44:48] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:44:49,979 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\config.py', reloading
+2024-11-23 00:44:50,074 - INFO -  * Restarting with stat
+2024-11-23 00:44:50,755 - WARNING -  * Debugger is active!
+2024-11-23 00:44:50,757 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:44:57,780 - INFO - 127.0.0.1 - - [23/Nov/2024 00:44:57] "GET / HTTP/1.1" 200 -
+2024-11-23 00:44:57,797 - INFO - 127.0.0.1 - - [23/Nov/2024 00:44:57] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:45:01,768 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:01] "GET /history/2 HTTP/1.1" 200 -
+2024-11-23 00:45:01,793 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:01] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:45:09,077 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:09] "[32mGET /remove/3 HTTP/1.1[0m" 302 -
+2024-11-23 00:45:11,090 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:11] "[32mGET /remove/2 HTTP/1.1[0m" 302 -
+2024-11-23 00:45:11,095 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:11] "GET / HTTP/1.1" 200 -
+2024-11-23 00:45:11,107 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:11] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:45:11,535 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:11] "GET / HTTP/1.1" 200 -
+2024-11-23 00:45:20,563 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:20] "[32mPOST /add_product HTTP/1.1[0m" 302 -
+2024-11-23 00:45:22,964 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:22] "GET / HTTP/1.1" 200 -
+2024-11-23 00:45:22,983 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:22] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:45:27,479 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:27] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:45:27,506 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:27] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:45:55,949 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:55] "GET / HTTP/1.1" 200 -
+2024-11-23 00:45:55,964 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:55] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:45:57,284 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:57] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:45:57,314 - INFO - 127.0.0.1 - - [23/Nov/2024 00:45:57] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:54:04,935 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:54:05,018 - INFO -  * Restarting with stat
+2024-11-23 00:54:05,694 - WARNING -  * Debugger is active!
+2024-11-23 00:54:05,695 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:54:10,826 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 00:54:10,849 - INFO - 127.0.0.1 - - [23/Nov/2024 00:54:10] "GET / HTTP/1.1" 200 -
+2024-11-23 00:54:10,870 - INFO - 127.0.0.1 - - [23/Nov/2024 00:54:10] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:54:12,604 - INFO - 127.0.0.1 - - [23/Nov/2024 00:54:12] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:54:12,628 - INFO - 127.0.0.1 - - [23/Nov/2024 00:54:12] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:54:23,005 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 00:54:23,020 - INFO - 127.0.0.1 - - [23/Nov/2024 00:54:23] "GET / HTTP/1.1" 200 -
+2024-11-23 00:54:23,037 - INFO - 127.0.0.1 - - [23/Nov/2024 00:54:23] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:54:25,297 - INFO - 127.0.0.1 - - [23/Nov/2024 00:54:25] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 00:54:25,322 - INFO - 127.0.0.1 - - [23/Nov/2024 00:54:25] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:56:56,158 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:56:56,232 - INFO -  * Restarting with stat
+2024-11-23 00:56:56,931 - WARNING -  * Debugger is active!
+2024-11-23 00:56:56,934 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:57:31,138 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-23 00:57:31,138 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-23 00:57:31,139 - INFO -  * Restarting with stat
+2024-11-23 00:57:31,740 - WARNING -  * Debugger is active!
+2024-11-23 00:57:31,743 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:57:42,989 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\config.py', reloading
+2024-11-23 00:57:43,065 - INFO -  * Restarting with stat
+2024-11-23 00:57:43,738 - WARNING -  * Debugger is active!
+2024-11-23 00:57:43,741 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:57:45,664 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:57:45,729 - INFO -  * Restarting with stat
+2024-11-23 00:57:46,358 - WARNING -  * Debugger is active!
+2024-11-23 00:57:46,361 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:57:49,962 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 00:57:49,988 - INFO - 127.0.0.1 - - [23/Nov/2024 00:57:49] "GET / HTTP/1.1" 200 -
+2024-11-23 00:57:50,006 - INFO - 127.0.0.1 - - [23/Nov/2024 00:57:50] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 00:57:53,062 - INFO - 127.0.0.1 - - [23/Nov/2024 00:57:53] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 00:57:53,142 - INFO - 127.0.0.1 - - [23/Nov/2024 00:57:53] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 00:57:53,144 - INFO - 127.0.0.1 - - [23/Nov/2024 00:57:53] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 00:57:53,172 - INFO - 127.0.0.1 - - [23/Nov/2024 00:57:53] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=85IpeMzK7CtmiERA6lyh HTTP/1.1" 200 -
+2024-11-23 00:57:53,201 - INFO - 127.0.0.1 - - [23/Nov/2024 00:57:53] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-11-23 00:58:52,042 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:58:52,104 - INFO -  * Restarting with stat
+2024-11-23 00:58:52,721 - WARNING -  * Debugger is active!
+2024-11-23 00:58:52,724 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:58:54,533 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 00:58:54,592 - INFO -  * Restarting with stat
+2024-11-23 00:58:55,258 - WARNING -  * Debugger is active!
+2024-11-23 00:58:55,261 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 00:58:58,258 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-23 00:58:58,259 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-23 00:58:58,260 - INFO -  * Restarting with stat
+2024-11-23 00:58:58,871 - WARNING -  * Debugger is active!
+2024-11-23 00:58:58,873 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 01:00:45,097 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:00:45,124 - INFO - 127.0.0.1 - - [23/Nov/2024 01:00:45] "GET / HTTP/1.1" 200 -
+2024-11-23 01:00:45,137 - INFO - 127.0.0.1 - - [23/Nov/2024 01:00:45] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:00:46,588 - INFO - 127.0.0.1 - - [23/Nov/2024 01:00:46] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 01:00:46,676 - INFO - 127.0.0.1 - - [23/Nov/2024 01:00:46] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 01:00:46,677 - INFO - 127.0.0.1 - - [23/Nov/2024 01:00:46] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 01:00:46,702 - INFO - 127.0.0.1 - - [23/Nov/2024 01:00:46] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=PJCxaxYLxQIDRJDRL3FU HTTP/1.1" 200 -
+2024-11-23 01:01:34,511 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-23 01:01:34,511 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-23 01:01:34,512 - INFO -  * Restarting with stat
+2024-11-23 01:01:35,146 - WARNING -  * Debugger is active!
+2024-11-23 01:01:35,148 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 01:01:42,280 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:42] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 01:01:42,355 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:42] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 01:01:42,355 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:42] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 01:01:42,384 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:42] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=wO3CuqJXknR6wSFC75Zg HTTP/1.1" 200 -
+2024-11-23 01:01:42,432 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:42] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-11-23 01:01:46,183 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:01:46,207 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:46] "GET / HTTP/1.1" 200 -
+2024-11-23 01:01:46,226 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:46] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:01:46,982 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:46] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 01:01:47,011 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:47] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 01:01:47,011 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:47] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 01:01:47,043 - INFO - 127.0.0.1 - - [23/Nov/2024 01:01:47] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=wO3CuqJXknR6wSFC75Zg HTTP/1.1[0m" 304 -
+2024-11-23 01:03:05,640 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:05] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 01:03:05,662 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:05] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 01:03:05,663 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:05] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 01:03:05,689 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:05] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=wO3CuqJXknR6wSFC75Zg HTTP/1.1[0m" 304 -
+2024-11-23 01:03:05,746 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:05] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-11-23 01:03:08,056 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:08] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 01:03:08,081 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:08] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 01:03:08,081 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:08] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 01:03:08,090 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:08] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=wO3CuqJXknR6wSFC75Zg HTTP/1.1[0m" 304 -
+2024-11-23 01:03:09,329 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:03:09,345 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:09] "GET / HTTP/1.1" 200 -
+2024-11-23 01:03:10,999 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:10] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 01:03:11,032 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:11] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 01:03:11,034 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:11] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 01:03:11,075 - INFO - 127.0.0.1 - - [23/Nov/2024 01:03:11] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=wO3CuqJXknR6wSFC75Zg HTTP/1.1[0m" 304 -
+2024-11-23 01:06:50,220 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 01:06:50,297 - INFO -  * Restarting with stat
+2024-11-23 01:06:50,991 - WARNING -  * Debugger is active!
+2024-11-23 01:06:50,993 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 01:06:57,385 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:06:57,407 - INFO - 127.0.0.1 - - [23/Nov/2024 01:06:57] "GET / HTTP/1.1" 200 -
+2024-11-23 01:06:57,422 - INFO - 127.0.0.1 - - [23/Nov/2024 01:06:57] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:06:59,323 - INFO - 127.0.0.1 - - [23/Nov/2024 01:06:59] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 01:06:59,408 - INFO - 127.0.0.1 - - [23/Nov/2024 01:06:59] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 01:06:59,410 - INFO - 127.0.0.1 - - [23/Nov/2024 01:06:59] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 01:06:59,447 - INFO - 127.0.0.1 - - [23/Nov/2024 01:06:59] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=Z80BkClOQu4oSJzyUCWB HTTP/1.1" 200 -
+2024-11-23 01:08:49,328 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 01:08:49,405 - INFO -  * Restarting with stat
+2024-11-23 01:08:50,074 - WARNING -  * Debugger is active!
+2024-11-23 01:08:50,076 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 01:09:04,513 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:09:04,537 - INFO - 127.0.0.1 - - [23/Nov/2024 01:09:04] "GET / HTTP/1.1" 200 -
+2024-11-23 01:09:04,550 - INFO - 127.0.0.1 - - [23/Nov/2024 01:09:04] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:09:06,389 - INFO - 127.0.0.1 - - [23/Nov/2024 01:09:06] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 01:09:06,414 - INFO - 127.0.0.1 - - [23/Nov/2024 01:09:06] "[33mGET /static/style.css HTTP/1.1[0m" 404 -

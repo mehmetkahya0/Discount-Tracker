@@ -1,7 +1,8 @@
 # app.py
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, json
 from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
+from datetime import datetime, timezone
+from pytz import timezone as pytz_timezone
 import requests
 from bs4 import BeautifulSoup
 import logging
@@ -26,20 +27,14 @@ class Product(db.Model):
     threshold = db.Column(db.Float, nullable=False)
     current_price = db.Column(db.Float)
     last_check = db.Column(db.DateTime, default=datetime.utcnow)
-    histories = db.relationship(
-        'PriceHistory',
-        backref='product',
-        lazy=True,
-        cascade='all, delete-orphan'
-    )
-    
-    
+    histories = db.relationship('PriceHistory', backref='product', lazy=True, cascade='all, delete-orphan')
+
 class PriceHistory(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), nullable=False)
     price = db.Column(db.Float, nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-        
+
 def extract_price(url: str, soup: BeautifulSoup) -> float:
     site_type = get_site_type(url)
     selectors = {
@@ -52,7 +47,8 @@ def extract_price(url: str, soup: BeautifulSoup) -> float:
         element = soup.select_one(selector)
         if element:
             price_text = element.text.strip()
-            return float(price_text.replace('TL', '').replace('₺', '').replace('.', '').replace(',', '.'))
+            return float(price_text.replace('TL', '').replace('₺', '')
+                       .replace('.', '').replace(',', '.'))
     raise ValueError("Could not extract price")
 
 def get_site_type(url: str) -> str:
@@ -65,8 +61,43 @@ def get_site_type(url: str) -> str:
         return 'hepsiburada'
     return 'unknown'
 
+def update_prices():
+    """Update prices for all products and save history"""
+    products = Product.query.all()
+    headers = {'User-Agent': app.config['USER_AGENTS']['default']}
+    
+    for product in products:
+        try:
+            response = requests.get(product.url, headers=headers, timeout=10)
+            soup = BeautifulSoup(response.content, 'html.parser')
+            new_price = extract_price(product.url, soup)
+            
+            # Save price history
+            history = PriceHistory(product_id=product.id, price=new_price)
+            db.session.add(history)
+            
+            # Update product
+            product.current_price = new_price
+            product.last_check = datetime.utcnow()
+            
+            if new_price <= product.threshold:
+                flash(f'Price alert for {product.name}! Current price: ₺{new_price:.2f}', 'success')
+                
+            logging.info(f"Updated price for {product.name}: ₺{new_price:.2f}")
+            
+        except Exception as e:
+            logging.error(f"Error updating price for {product.url}: {str(e)}")
+            continue
+    
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error saving updates: {str(e)}")
+
 @app.route('/')
 def index():
+    update_prices()  # Update prices on page load
     products = Product.query.all()
     return render_template('index.html', products=products)
 
@@ -88,12 +119,9 @@ def add_product():
 
         headers = {'User-Agent': app.config['USER_AGENTS']['default']}
         response = requests.get(url, headers=headers, timeout=10)
-        response.raise_for_status()
-        
         soup = BeautifulSoup(response.content, 'html.parser')
         price = extract_price(url, soup)
         
-        # Extract product name
         site_type = get_site_type(url)
         name_selectors = {
             'amazon': '#productTitle',
@@ -107,15 +135,12 @@ def add_product():
         db.session.add(product)
         db.session.flush()
 
-        # Add initial price history
         history = PriceHistory(product_id=product.id, price=price)
         db.session.add(history)
         db.session.commit()
 
         flash('Product added successfully', 'success')
         
-    except requests.RequestException as e:
-        flash(f'Error accessing URL: {str(e)}', 'error')
     except Exception as e:
         flash(f'Error adding product: {str(e)}', 'error')
         db.session.rollback()
@@ -126,25 +151,47 @@ def add_product():
 @app.route('/history/<int:product_id>')
 def price_history(product_id):
     product = Product.query.get_or_404(product_id)
-    history = PriceHistory.query.filter_by(product_id=product_id).order_by(PriceHistory.timestamp).all()
+    history = PriceHistory.query.filter_by(product_id=product_id)\
+        .order_by(PriceHistory.timestamp.desc())\
+        .all()
     
-    # Pre-format timestamps and collect prices
-    timestamps = [entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') for entry in history]
-    prices = [entry.price for entry in history]
+    local_tz = pytz_timezone('Europe/Istanbul')
     
-    return render_template('history.html', product=product, history=history, timestamps=timestamps, prices=prices)
+    # Prepare data for template
+    history_data = []
+    for entry in history:
+        utc_time = entry.timestamp.replace(tzinfo=timezone.utc)
+        local_time = utc_time.astimezone(local_tz)
+        history_data.append({
+            'timestamp': local_time.strftime('%Y-%m-%d %H:%M:%S'),
+            'price': float(entry.price)  # Ensure price is float
+        })
+    
+    # Prepare chart data
+    chart_data = {
+        'labels': [entry['timestamp'] for entry in history_data],
+        'prices': [entry['price'] for entry in history_data]
+    }
+    
+    return render_template(
+        'history.html',
+        product=product,
+        history_data=history_data,
+        chart_data=json.dumps(chart_data)
+    )
 
 @app.route('/remove/<int:product_id>')
 def remove_product(product_id):
-    product = Product.query.get_or_404(product_id)
+    try:
+        product = Product.query.get_or_404(product_id)
+        db.session.delete(product)
+        db.session.commit()
+        flash('Product removed successfully', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error removing product: {str(e)}', 'error')
+        logging.error(f'Error removing product {product_id}: {str(e)}')
     
-    # Delete associated PriceHistory entries
-    for history in product.histories:
-        db.session.delete(history)
-    
-    db.session.delete(product)
-    db.session.commit()
-    flash('Product removed successfully', 'success')
     return redirect(url_for('index'))
 
 if __name__ == '__main__':

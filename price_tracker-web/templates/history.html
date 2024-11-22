@@ -1,62 +1,71 @@
 <!-- templates/history.html -->
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %}
+
+{% block content %}
 <div class="container">
-  <h2>Price History for {{ product.name }}</h2>
-  {% if history %}
-  <div class="mb-4">
-    <canvas id="priceChart"></canvas>
-  </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Price (₺)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for entry in history %}
-      <tr>
-        <td>{{ entry.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-        <td>{{ "%.2f"|format(entry.price) }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  {% else %}
-  <p>No price history available for this product.</p>
-  {% endif %}
+    <h2>Price History for {{ product.name }}</h2>
+    {% if history_data %}
+    <div class="mb-4">
+        <canvas id="priceChart"></canvas>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Price (₺)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in history_data %}
+            <tr>
+                <td>{{ entry.timestamp }}</td>
+                <td>{{ "%.2f"|format(entry.price) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No price history available for this product.</p>
+    {% endif %}
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  const ctx = document.getElementById('priceChart').getContext('2d');
-
-  const chartData = {
-      labels: {{ timestamps|tojson }},
-      datasets: [{
-          label: 'Price (₺)',
-          data: {{ prices|tojson }},
-          borderColor: 'rgba(75, 192, 255, 1)',
-          fill: true,
-          tension: 0.1
-      }]
-  };
-
-  new Chart(ctx, {
-      type: 'line',
-      data: chartData,
-      options: {
-          scales: {
-              y: {
-                  beginAtZero: false,
-                  ticks: {
-                      callback: function(value) {
-                          return '₺' + value.toFixed(2);
-                      }
-                  }
-              }
-          }
-      }
-  });
+document.addEventListener('DOMContentLoaded', function() {
+    const ctx = document.getElementById('priceChart').getContext('2d');
+    const chartData = {{ chart_data|safe }};
+    
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: 'Price (₺)',
+                data: chartData.prices,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                tension: 0.1,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    ticks: {
+                        callback: function(value) {
+                            return '₺' + value.toFixed(2);
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true
+                }
+            }
+        }
+    });
+});
 </script>
 {% endblock %}
