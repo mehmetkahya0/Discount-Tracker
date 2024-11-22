@@ -443,3 +443,27 @@
 2024-11-23 01:11:54,928 - INFO - 127.0.0.1 - - [23/Nov/2024 01:11:54] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
 2024-11-23 01:12:27,054 - INFO - 127.0.0.1 - - [23/Nov/2024 01:12:27] "GET /history/1 HTTP/1.1" 200 -
 2024-11-23 01:12:27,089 - INFO - 127.0.0.1 - - [23/Nov/2024 01:12:27] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:36:59,646 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-11-23 01:36:59,646 - INFO - [33mPress CTRL+C to quit[0m
+2024-11-23 01:36:59,647 - INFO -  * Restarting with stat
+2024-11-23 01:37:00,338 - WARNING -  * Debugger is active!
+2024-11-23 01:37:00,341 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 01:37:02,423 - INFO -  * Detected change in 'C:\\Users\\mehmet\\Desktop\\Price-Tracker\\price_tracker-web\\app.py', reloading
+2024-11-23 01:37:02,483 - INFO -  * Restarting with stat
+2024-11-23 01:37:03,140 - WARNING -  * Debugger is active!
+2024-11-23 01:37:03,143 - INFO -  * Debugger PIN: 808-148-025
+2024-11-23 01:37:07,253 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:37:07,276 - INFO - 127.0.0.1 - - [23/Nov/2024 01:37:07] "GET / HTTP/1.1" 200 -
+2024-11-23 01:37:07,293 - INFO - 127.0.0.1 - - [23/Nov/2024 01:37:07] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:37:23,928 - INFO - 127.0.0.1 - - [23/Nov/2024 01:37:23] "[35m[1mGET /history/1 HTTP/1.1[0m" 500 -
+2024-11-23 01:37:24,008 - INFO - 127.0.0.1 - - [23/Nov/2024 01:37:24] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 304 -
+2024-11-23 01:37:24,010 - INFO - 127.0.0.1 - - [23/Nov/2024 01:37:24] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 304 -
+2024-11-23 01:37:24,037 - INFO - 127.0.0.1 - - [23/Nov/2024 01:37:24] "GET /history/1?__debugger__=yes&cmd=resource&f=console.png&s=liSKKh91PEoJeE2j0ylH HTTP/1.1" 200 -
+2024-11-23 01:37:24,070 - INFO - 127.0.0.1 - - [23/Nov/2024 01:37:24] "[36mGET /history/1?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 304 -
+2024-11-23 01:38:23,752 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:38:23,771 - INFO - 127.0.0.1 - - [23/Nov/2024 01:38:23] "GET / HTTP/1.1" 200 -
+2024-11-23 01:38:23,782 - INFO - 127.0.0.1 - - [23/Nov/2024 01:38:23] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:38:25,442 - INFO - 127.0.0.1 - - [23/Nov/2024 01:38:25] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 01:38:25,470 - INFO - 127.0.0.1 - - [23/Nov/2024 01:38:25] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:38:29,647 - INFO - 127.0.0.1 - - [23/Nov/2024 01:38:29] "[32mGET /goto/1 HTTP/1.1[0m" 302 -

@@ -194,6 +194,12 @@ def remove_product(product_id):
     
     return redirect(url_for('index'))
 
+@app.route('/goto/<int:product_id>')
+def goto_product(product_id):
+    product = Product.query.get_or_404(product_id)
+    return redirect(product.url)
+
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()

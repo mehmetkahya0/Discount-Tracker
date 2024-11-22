@@ -3,29 +3,37 @@
 
 {% block content %}
 <div class="container">
-    <h2>Price History for {{ product.name }}</h2>
-    {% if history_data %}
-    <div class="mb-4">
-        <canvas id="priceChart"></canvas>
+    <div class="d-flex justify-content-between align-items-center">
+        <h2>Price History for {{ product.name }}</h2>
+        <a href="{{ url_for('goto_product', product_id=product.id) }}" 
+           class="btn btn-primary"
+           target="_blank">
+            <i class="fas fa-external-link-alt"></i> Go to Product
+        </a>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Price (₺)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for entry in history_data %}
-            <tr>
-                <td>{{ entry.timestamp }}</td>
-                <td>{{ "%.2f"|format(entry.price) }}</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+    {% if history_data %}
+        <div class="mb-4">
+            <canvas id="priceChart"></canvas>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Price (₺)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in history_data %}
+                <tr>
+                    <td>{{ entry.timestamp }}</td>
+                    <td>{{ "%.2f"|format(entry.price) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     {% else %}
-    <p>No price history available for this product.</p>
+        <p>No price history available for this product.</p>
     {% endif %}
 </div>
 
@@ -57,11 +65,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             return '₺' + value.toFixed(2);
                         }
                     }
-                }
-            },
-            plugins: {
-                legend: {
-                    display: true
                 }
             }
         }
