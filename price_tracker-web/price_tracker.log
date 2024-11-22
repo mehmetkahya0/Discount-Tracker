@@ -426,3 +426,20 @@
 2024-11-23 01:09:04,550 - INFO - 127.0.0.1 - - [23/Nov/2024 01:09:04] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
 2024-11-23 01:09:06,389 - INFO - 127.0.0.1 - - [23/Nov/2024 01:09:06] "GET /history/1 HTTP/1.1" 200 -
 2024-11-23 01:09:06,414 - INFO - 127.0.0.1 - - [23/Nov/2024 01:09:06] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:10:11,146 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:11] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 01:10:11,171 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:11] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:10:23,002 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:10:23,014 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:23] "GET / HTTP/1.1" 200 -
+2024-11-23 01:10:23,025 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:23] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:10:27,277 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:27] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 01:10:27,306 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:27] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:10:44,909 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:10:44,925 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:44] "GET / HTTP/1.1" 200 -
+2024-11-23 01:10:44,941 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:44] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:10:49,466 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:49] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 01:10:49,492 - INFO - 127.0.0.1 - - [23/Nov/2024 01:10:49] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:11:54,895 - INFO - Updated price for Stanley The Quick Flip Paslanmaz Çelik Termos, 1.06 lt: \u20ba1359.00
+2024-11-23 01:11:54,911 - INFO - 127.0.0.1 - - [23/Nov/2024 01:11:54] "GET / HTTP/1.1" 200 -
+2024-11-23 01:11:54,928 - INFO - 127.0.0.1 - - [23/Nov/2024 01:11:54] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
+2024-11-23 01:12:27,054 - INFO - 127.0.0.1 - - [23/Nov/2024 01:12:27] "GET /history/1 HTTP/1.1" 200 -
+2024-11-23 01:12:27,089 - INFO - 127.0.0.1 - - [23/Nov/2024 01:12:27] "[33mGET /static/style.css HTTP/1.1[0m" 404 -
