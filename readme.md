@@ -1,4 +1,4 @@
-# Price Tracker v1.0
+# Price Tracker v1.0 WIP
 
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
 
